@@ -1,0 +1,1320 @@
+***Asynchronous JavaScript and XML***
+Part 6 Ajax 예제
+
+Chap 14 네이버 Open API를 사용한 검색 서비스 제공
+            http://developer.naver.com/
+ 1. 네이버 Open API 
+    1.1 키 값 받기 
+    1.2 서버에 쿼리 전송하는 방법 
+    1.3 검색 결과 XML 문서의 구조 
+ 2. 네이버 오픈 API를 사용한 검색 서비스 구현 
+     2.1 프로그램 구조 
+     2.2 서버 프록시 프로그램 
+ : [naver_proxy.jsp]
+<%@ page pageEncoding="euc-kr" %>
+<%@ page import = "org.apache.commons.httpclient.HttpClient" %>
+<%@ page import = "org.apache.commons.httpclient.methods.GetMethod" %>
+<%@ page import = "org.apache.commons.httpclient.HttpStatus" %>
+<%
+	request.setCharacterEncoding("utf-8");
+	String url = "http://openapi.naver.com/search";
+	String queryString = request.getQueryString();
+	
+	HttpClient client = new HttpClient();
+	GetMethod method = new GetMethod(url);
+	
+	method.setQueryString(queryString);
+	try {
+		int statusCode = client.executeMethod(method);
+		
+		out.clearBuffer();
+		response.reset();
+		
+		response.setStatus(statusCode);
+		
+		if (statusCode == HttpStatus.SC_OK) {
+			String result = method.getResponseBodyAsString();
+			response.setContentType("text/xml; charset=utf-8");
+			out.println(result);
+		}
+	} finally {
+		if (method != null) method.releaseConnection();
+	}
+%>
+
+     2.3 클라이언트 HTML 코드 
+ : [naversearch.css]
+#searchForm {
+	text-align: center;
+	margin-bottom: 0px;
+}
+#searchResultView {
+	background-color: #ccc;
+	width: 100%;
+	margin-bottom: 15px;
+}
+
+div.resultBox {
+	padding: 5px;
+	background-color: #fff;
+}
+div.title {
+	text-align: left;
+	font-weight: bold;
+	font-size: 12px;
+	margin-bottom: 10px;
+}
+div.itemTitle {
+	font-size: 14px;
+}
+div.itemDesc {
+	margin-bottom: 5px;
+	font-size: 12px;
+}
+
+#footer {
+	text-align: center;
+	background-color: #55cc55;
+	color: #ffffff;
+	padding: 5px;
+	font-size: 12px;
+}
+span.error {
+	color: red;
+}
+
+ : [naversearch.html]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=euc-kr" />
+	<title>네이버 오픈 API</title>
+	<script type="text/javascript" src="ajax.js"></script>
+	<script type="text/javascript" src="naversearch.js"></script>
+	<script type="text/javascript">
+	var naverSearch = null;
+	naverOpenAPIKey = "c1b406b32dbbbbeee5f2a36ddc14067f"; // 알맞게 수정
+	
+	window.onload = function() {
+		var options = {
+			queryInput: "query",
+			searchButton: "searchBtn",
+			checkKin: "kin",
+			checkBlog: "blog",
+			checkWebkr: "webkr",
+			resultTable: "searchResultView"
+		};
+		naverSearch = new NaverSearch(options);
+	}
+	</script>
+	<link rel="stylesheet" type="text/css" href="naversearch.css">
+</head>
+<body>
+
+<div id="searchForm">
+	<img src="images/naver.gif" />
+	<label for="query">검색어</label>
+	<input type="text" name="query" id="query" />
+	<input type="button" id="searchBtn" value="검색" />
+	
+	<input type="checkbox" name="kin" id="kin" value="kin" checked="checked"/>
+	<label for="kin">지식인</label>
+	<input type="checkbox" name="blog" id="blog" value="blog"/>
+	<label for="blog">블로그</label>
+	<input type="checkbox" name="webkr" id="webkr" value="webkr"/>
+	<label for="webkr">웹</label>
+</div>
+
+<table id="searchResultView"><tr></tr></table>
+
+<div id="footer">
+네이버 오픈 API를 사용한 검색 서비스 제공
+</div>
+
+</body>
+</html>
+
+     2.4 naversearch.js 자바 스크립트 모듈 
+          (1) ResultView 클래스	
+          (2) NaverSearch 클래스	
+ : [naversearch.js]
+var naverOpenAPIKey = "";
+
+ResultView = function(title, td) {
+	this.td = td;
+	var html = 
+		"<div class='resultBox'>"+
+			"<div class='title'>"+title+" 검색</div>"+
+			"<div class='result'></div>"+
+		"</div>";
+	this.td.innerHTML = html;
+	this.result = this.td.firstChild.lastChild;
+}
+ResultView.prototype = {
+	renderReady: function() {
+		this.result.innerHTML = "검색 중입니다...";
+	},
+	renderResult: function(req) {
+		if (req.readyState == 4) {
+			if (req.status != 200) {
+				this.result.innerHTML = "<span class='error'>에러 발생:"+
+					req.status + "</span>";
+			} else {
+				this.renderFromXML(req.responseXML);
+			}
+		}
+	},
+	renderFromXML: function(xmlDoc) {
+		this.result.innerHTML = "";
+		var items = xmlDoc.getElementsByTagName("item");
+		for (var i = 0 ; i < items.length ; i++) {
+			var item = items.item(i);
+			
+			var titleNode = item.getElementsByTagName("title").item(0);
+			var title = (titleNode.firstChild) ? titleNode.firstChild.nodeValue : "";
+			
+			var linkNode = item.getElementsByTagName("link").item(0);
+			var link = (linkNode.firstChild) ? linkNode.firstChild.nodeValue : "";
+			
+			var descNode = item.getElementsByTagName("description").item(0);
+			var desc = (descNode.firstChild) ? descNode.firstChild.nodeValue : "";
+			
+			var titleDiv = document.createElement("div");
+			var titleHtml = "<a href='"+link+"' target='_new'>"+
+			                title+"</a>";
+			titleDiv.className = "itemTitle";
+			titleDiv.innerHTML = titleHtml;
+			
+			var descDiv = document.createElement("div");
+			descDiv.className = "itemDesc";
+			descDiv.innerHTML = desc;
+			
+			this.result.appendChild(titleDiv);
+			this.result.appendChild(descDiv);
+		}
+	}
+}
+
+NaverSearch = function(options) {
+	this.options = options;
+	
+	this.queryInput = null;
+	this.kinCheckBox = null;
+	this.blogCheckBox = null;
+	this.webkrCheckBox = null;
+	
+	this.resultTable = null;
+	
+	this.resultView = {
+		kin: null, blog: null, webkr: null
+	};
+	this.titles = {
+		kin: '지식인', blog: '블로그', webkr: '웹'
+	};
+	this.tdIndex = {
+		kin: 0, blog: 1, webkr: 2
+	};
+	
+	this.searched = false;
+	this.query = null;
+	this.init();
+}
+NaverSearch.prototype = {
+	init: function() {
+		this.queryInput = 
+			document.getElementById(this.options.queryInput);
+		
+		var searchBtn = 
+			document.getElementById(this.options.searchButton);
+		ajax.Event.addListener(searchBtn, "click",
+			ajax.Event.bindAsListener(this.doClickOnSearchBtn, this));
+		
+		this.kinCheckBox = 
+			document.getElementById(this.options.checkKin);
+		ajax.Event.addListener(this.kinCheckBox, "click", 
+			ajax.Event.bindAsListener(this.doCheck, this));
+
+		this.blogCheckBox = 
+			document.getElementById(this.options.checkBlog);
+		ajax.Event.addListener(this.blogCheckBox, "click", 
+			ajax.Event.bindAsListener(this.doCheck, this));
+
+		this.webkrCheckBox = 
+			document.getElementById(this.options.checkWebkr);
+		ajax.Event.addListener(this.webkrCheckBox, "click", 
+			ajax.Event.bindAsListener(this.doCheck, this));
+		
+		this.resultTable = document.getElementById(this.options.resultTable);
+	},
+	doClickOnSearchBtn: function() {
+		if (this.queryInput.value == '') {
+			alert("검색어를 입력하세요");	
+		} else {
+			if (this.kinCheckBox.checked ||
+			        this.blogCheckBox.checked ||
+			        this.webkrCheckBox.checked) {
+				this.searched = true;
+				this.query = this.queryInput.value;
+				
+				if (this.kinCheckBox.checked) {
+					this.startSearch('kin');
+				}
+				if (this.blogCheckBox.checked) {
+					this.startSearch('blog');
+				}
+				if (this.webkrCheckBox.checked) {
+					this.startSearch('webkr');
+				}
+			} else {
+				alert("검색 항목을 선택하세요.");
+			}
+		}
+	},
+	startSearch: function(type) {
+		if (this.resultView[type] == null) {
+			this.resultView[type] = this.makeResultView(type);
+		}
+		this.resultView[type].renderReady();
+		this.sendKeyword(type);
+	},
+	makeResultView: function(type) {
+		var tr = this.resultTable.rows.item(0);
+		
+		var idx = this.tdIndex[type];
+		if (idx > tr.cells.length - 1) idx = -1;
+		
+		var td = tr.insertCell(idx);
+		td.vAlign = "top";
+		var resultView = new ResultView(this.titles[type], td);
+		return resultView;
+	},
+	sendKeyword: function(type) {
+		if (this.resultView[type] != null) {
+			var url = "naver_proxy.jsp";
+			var params = "key="+naverOpenAPIKey+
+				"&query="+encodeURIComponent(this.query)+
+				"&display=10&start=1&target="+type+"&sort=sim";
+			
+			new ajax.xhr.Request(url, params, 
+				this.resultView[type].renderResult, "GET",
+				this.resultView[type]);
+		}
+	},
+	doCheck: function(e) {
+		var event = window.event || e;
+		var target = ajax.Event.getTarget(event);
+		var type = null;
+		if (target == this.kinCheckBox) {
+			type = 'kin';
+		} else if (target == this.blogCheckBox) {
+			type = 'blog';
+		} else if (target == this.webkrCheckBox) {
+			type = 'webkr';
+		}
+		if (target.checked) {
+			if (this.resultView[type] == null && this.searched) {
+				this.startSearch(type);
+			}
+		} else {
+			if (this.resultView[type] != null && this.searched) {
+				this.closeResultView(type);
+			}
+		}
+	},
+	closeResultView: function(type) {
+		var td = this.resultView[type].td;
+		td.parentNode.removeChild(td);
+		this.resultView[type] = null;
+	}
+}
+
+     2.5 ajax.js의 수정된 부분 
+ : [ajax.js]
+var ajax = {};
+ajax.xhr = {};
+
+ajax.xhr.Request = function(url, params, callback, method, applyObj) {
+	this.url = url;
+	this.params = params;
+	this.callback = callback;
+	this.method = method;
+	this.applyObj = (applyObj == null) ? null : applyObj;
+	
+	this.send();
+}
+ajax.xhr.Request.prototype = {
+	getXMLHttpRequest: function() {
+		if (window.ActiveXObject) {
+			try {
+				return new ActiveXObject("Msxml2.XMLHTTP");
+			} catch(e) {
+				try {
+					return new ActiveXObject("Microsoft.XMLHTTP");
+				} catch(e1) { return null; }
+			}
+		} else if (window.XMLHttpRequest) {
+			return new XMLHttpRequest();
+		} else {
+			return null;
+		}		
+	},
+	send: function() {
+		this.req = this.getXMLHttpRequest();
+		
+		var httpMethod = this.method ? this.method : 'GET';
+		if (httpMethod != 'GET' && httpMethod != 'POST') {
+			httpMethod = 'GET';
+		}
+		var httpParams = (this.params == null || this.params == '') ? 
+		                 null : this.params;
+		var httpUrl = this.url;
+		if (httpMethod == 'GET' && httpParams != null) {
+			httpUrl = httpUrl + "?" + httpParams;
+		}
+		this.req.open(httpMethod, httpUrl, true);
+		this.req.setRequestHeader(
+			'Content-Type', 'application/x-www-form-urlencoded');
+		var request = this;
+		this.req.onreadystatechange = function() {
+			request.onStateChange.call(request);
+		}
+		this.req.send(httpMethod == 'POST' ? httpParams : null);
+	},
+	onStateChange: function() {
+		if (this.applyObj) {
+			this.callback.call(this.applyObj, this.req);
+		} else {
+			this.callback(this.req);
+		}
+	}
+}
+
+ajax.Event = {};
+ajax.Event.addListener = function(element, name, observer, useCapture) {
+    useCapture = useCapture || false;
+
+	if (element.addEventListener) {
+		element.addEventListener(name, observer, useCapture);
+	} else if (element.attachEvent) {
+		element.attachEvent('on' + name, observer);
+	}
+}
+ajax.Event.removeListener = function(element, name, observer, useCapture) {
+	useCapture = useCapture || false;
+	
+	if (element.removeEventListener) {
+		element.removeEventListener(name, observer, useCapture);
+	} else if (element.detachEvent) {
+		element.detachEvent('on' + name, observer);
+	}
+}
+ajax.Event.getTarget = function(event) {
+	if (event == null) return null;
+	if (event.target) return event.target;
+	else if (event.srcElement) return event.srcElement;
+	return null;
+}
+ajax.Event.getMouseXY = function(event) {
+	var mouseX = event.clientX;
+	var mouseY = event.clientY;
+	
+	var dd = document.documentElement;
+	var db = document.body;
+	if (dd) {
+		mouseX += dd.scrollLeft;
+		mouseY += dd.scrollTop;
+	} else if (db) {
+		mouseX += db.scrollLeft;
+		mouseY += db.scrollTop;
+	}
+	return {x: mouseX, y: mouseY};
+}
+ajax.Event.isLeftButton= function(event) {
+	return (event.which) ? 
+	       event.which == 1 && event.button == 0 :
+	       (event.type == 'click') ? event.button == 0 : event.button == 1;
+}
+ajax.Event.isRightButton = function(event) {
+	return event.button == 2;
+}
+ajax.Event.stopPropagation = function(event) {
+	if (event.stopPropagation) {
+	    event.stopPropagation();
+	} else {
+	    event.cancelBubble = true;
+	}
+}
+ajax.Event.preventDefault = function(event) {
+	if (event.preventDefault) {
+	    event.preventDefault();
+	} else {
+	    event.returnValue = false;
+	}
+}
+ajax.Event.stopEvent = function(event) {
+	ajax.Event.stopPropagation(event);
+	ajax.Event.preventDefault(event);
+}
+ajax.Event.bindAsListener = function(func, obj) {
+	return function() {
+		return func.apply(obj, arguments);
+	}
+}
+
+ajax.GUI = {};
+ajax.GUI.setOpacity = function(el, opacity) {
+	if (el.filters) {
+		el.style.filter = 'alpha(opacity=' + opacity * 100 + ')';
+	} else {
+		el.style.opacity = opacity;
+	}
+}
+ajax.GUI.getStyle = function(el, property) {
+	var value = null;
+	var dv = document.defaultView;
+	
+	if (property == 'opacity' && el.filters) {// IE opacity
+		value = 1;
+		try {
+			value = el.filters.item('alpha').opacity / 100;
+		} catch(e) {}
+	} else if (el.style[property]) {
+		value = el.style[property];
+	} else if (el.currentStyle && el.currentStyle[property]) {
+		value = el.currentStyle[property];
+	} else if ( dv && dv.getComputedStyle ) {
+		// 대문자를 소문자로 변환하고 그 앞에 '-'를 붙인다.
+		var converted = '';
+		for(i = 0, len = property.length;i < len; ++i) {
+			if (property.charAt(i) == property.charAt(i).toUpperCase()) {
+				converted = converted + '-' + 
+				            property.charAt(i).toLowerCase();
+			} else {
+				converted = converted + property.charAt(i);
+			}
+		}
+		if (dv.getComputedStyle(el, '').getPropertyValue(converted)) {
+			value = dv.getComputedStyle(el, '').getPropertyValue(converted);
+		}
+	}
+	return value;
+}
+
+ajax.GUI.getXY = function(el) {
+	// el은 문서에 포함되어 있어야 하고, 화면에 보여야 한다.
+	if (el.parentNode === null || el.style.display == 'none') {
+		return false;
+	}
+	
+	var parent = null;
+	var pos = [];
+	var box;
+	
+	if (document.getBoxObjectFor) { // gecko 엔진 기반
+		box = document.getBoxObjectFor(el);
+		pos = [box.x, box.y];
+	} else { // 기타 브라우저
+		pos = [el.offsetLeft, el.offsetTop];
+		parent = el.offsetParent;
+		if (parent != el) {
+			while (parent) {
+				pos[0] += parent.offsetLeft;
+				pos[1] += parent.offsetTop;
+				parent = parent.offsetParent;
+			}
+		}
+		// 오페라와 사파리의 'absolute' postion의 경우
+		// body의 offsetTop을 잘못 계산하므로 보정해야 한다.
+		var ua = navigator.userAgent.toLowerCase();
+		if (
+			ua.indexOf('opera') != -1
+			|| ( ua.indexOf('safari') != -1 && this.getStyle(el, 'position') == 'absolute' )
+		) {
+			pos[1] -= document.body.offsetTop;
+		}
+	}
+	
+	if (el.parentNode) { parent = el.parentNode; }
+	else { parent = null; }
+	
+	// body 또는 html 이외의 부모 노드 중에 스크롤되어 있는
+	// 영역이 있다면 알맞게 처리한다.
+	while (parent && parent.tagName != 'BODY' && parent.tagName != 'HTML') {
+		pos[0] -= parent.scrollLeft;
+		pos[1] -= parent.scrollTop;
+		
+		if (parent.parentNode) { parent = parent.parentNode; }
+		else { parent = null; }
+	}
+	return {x: pos[0], y: pos[1]};
+}
+ajax.GUI.getX = function(el) {
+	return ajax.GUI.getXY(el).x;
+}
+ajax.GUI.getY = function(el) {
+	return ajax.GUI.getXY(el).y;
+}
+ajax.GUI.getBounds = function(el) {
+	var xy = ajax.GUI.getXY(el);
+	return {
+		x: xy.x,
+		y: xy.y,
+		width: el.offsetWidth,
+		height: el.offsetHeight
+	};
+}
+ajax.GUI.setXY = function(el, x, y) {
+	var pageXY = ajax.GUI.getXY(el);
+	if (pageXY === false) { return false; }
+	var position = ajax.GUI.getStyle(el, 'position');
+	if (!position || position == 'static') {
+		el.style.position = 'relative';
+	}
+	var delta = {
+		x: parseInt( ajax.GUI.getStyle(el, 'left'), 10 ),
+		y: parseInt( ajax.GUI.getStyle(el, 'top'), 10 )
+	};
+	if ( isNaN(delta.x) ) { delta.x = 0; }
+	if ( isNaN(delta.y) ) { delta.y = 0; }
+	
+	if (x != null) {
+		el.style.left = (x - pageXY.x + delta.x) + 'px';
+	}
+	if (y != null) {
+		el.style.top = (y - pageXY.y + delta.y) + 'px';
+	}
+	
+	return true;
+}
+
+Chap 15 연속된 <select> 선택 처리를 위한 DoubleSelect 모듈
+ 1. 연속된 선택: 기존 방식과Ajax 방식 구현 
+ 2. DoubleSelect 모듈 
+  : [doubleselect.js]
+DoubleSelect = function(selId1, selId2, url, optionParam) {
+	this.select1 = document.getElementById(selId1);
+	this.select2 = document.getElementById(selId2);
+	
+	this.url = url;
+	this.optionParam = (optionParam == null) ? null : optionParam;
+	
+	ajax.Event.addListener(this.select1, "change", 
+		ajax.Event.bindAsListener(this.doChange, this));
+}
+DoubleSelect.prototype = {
+	doChange: function(e) {
+		if (this.select1.value != '') {
+			var param = "value="+encodeURIComponent(this.select1.value);
+			if (this.optionParam != null) {
+				param += this.optionParam;
+			}
+			var thisObj = this;
+			new ajax.xhr.Request(this.url, param, this.loaded, "GET", thisObj);
+		} else {
+			this.clearSelect2();
+		}
+	},
+	clearSelect2: function() {
+		this.select2.length = 0;
+	},
+	loaded: function(req) {
+		if (req.readyState == 4) {
+			if (req.status == 200) {
+				var optionList = eval("(" + req.responseText + ")");
+				this.initSelect2(optionList);
+			} else {
+				alert("에러 발생: "+req.status);
+			}
+		}
+	},
+	initSelect2: function(optionList) {
+		this.clearSelect2();
+
+		var optionArray = new Array();
+		
+		var option = document.createElement("option");
+		option.text = "선택하세요";
+		option.value = "";
+		optionArray[optionArray.length] = option;
+		
+		option = document.createElement("option");
+		option.text = "-----";
+		option.value = "";
+		optionArray[optionArray.length] = option;
+		
+		for (var i = 0 ; i < optionList.length ; i++) {
+			option = document.createElement("option");
+			option.text = optionList[i].text;
+			option.value = optionList[i].value;
+			optionArray[optionArray.length] = option;
+		}
+		for (var i = 0 ; i < optionArray.length ; i++) {
+			try {
+				this.select2.add(optionArray[i], null);
+			} catch(e) {
+				this.select2.add(optionArray[i], -1);
+			}
+		}
+	}
+}
+
+ : [select.jsp]
+<%@ page contentType = "text/plain; charset=euc-kr" %>
+<%
+	request.setCharacterEncoding("utf-8");
+	String value = request.getParameter("value");
+	String type = request.getParameter("type");
+	
+	if (value.equals("001")) {
+%>
+[
+	{text: "구로구", value: "001001"},
+	{text: "관악구", value: "001002"},
+	{text: "서대문구", value: "001003"}
+]
+<%
+	} else if (value.equals("002")) {
+%>
+[
+	{text: "남동구", value: "002001"},
+	{text: "부평구", value: "002002"},
+	{text: "계양구", value: "002003"}
+]
+<%
+	} else if (value.equals("003")) {
+%>
+[
+	{text: "서구", value: "003001"},
+	{text: "유성구", value: "003002"},
+	{text: "대덕구", value: "003003"}
+]
+<%
+	}
+%>
+
+ : [useDoubleSelect.html]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=euc-kr" />
+	<title>DoubleSelect 컴포넌트 사용</title>
+	<script type="text/javascript" src="ajax.js"></script>
+	<script type="text/javascript" src="doubleselect.js"></script>
+	<script type="text/javascript">
+	window.onload = function() {
+		var doubleSelect = new DoubleSelect(
+			'city', 'gu', "select.jsp", "&type=city");
+	}
+	</script>
+	<link rel="stylesheet" type="text/css" href="naversearch.css">
+</head>
+<body>
+
+시:<select id="city">
+	<option value="">선택하세요</option>
+	<option value="">------</option>
+	<option value="001">서울</option>
+	<option value="002">인천</option>
+	<option value="003">대전</option>
+</select>
+
+구:<select id="gu"></select>
+
+</body>
+</html>
+
+ : [selectCategory.jsp]
+<%@ page contentType = "text/plain; charset=euc-kr" %>
+<%
+	request.setCharacterEncoding("utf-8");
+	String value = request.getParameter("value");
+	String parent = request.getParameter("parent");
+	
+	System.out.println("v:"+value);
+	System.out.println("p:"+parent);
+	
+	if (parent.equals("category1")) {
+		if (value.equals("001")) {
+%>
+	[
+		{text: "LG XNOTE", value: "001001"},
+		{text: "삼성 SENS", value: "001002"}
+	]
+<%
+		} else if (value.equals("002")) {
+%>
+	[
+		{text: "삼성", value: "002001"},
+		{text: "LG 전자", value: "002002"}
+	]
+<%
+		}
+	} else if (parent.equals("category2")) {
+		if (value.equals("001001")) {
+%>
+	[
+		{text: "XNOTE LW20", value: "001001001"},
+		{text: "X-NOTE LW40-PLUS", value: "001001002"}
+	]
+<%
+		} else if (value.equals("001002")) {
+%>
+	[
+		{text: "센스 NT-Q35/C161", value: "001002001"},
+		{text: "센스 NT-X06/C17D", value: "001002002"}
+	]
+<%
+		} else if (value.equals("002001")) {
+%>
+	[
+		{text: "매직스테이션 DM-Z48/E304", value: "002001001"},
+		{text: "매직스테이션 DM-T50/V300", value: "002001002"}
+	]
+<%
+		} else if (value.equals("002002")) {
+%>
+	[
+		{text: "AV Center DV50K-PM601", value: "002002001"},
+		{text: "LG전자 X270A", value: "002002002"}
+	]
+<%
+		}
+	}
+%>
+
+ : [tripleSelect.html]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=euc-kr" />
+	<title>Triple Select 예제</title>
+	<script type="text/javascript" src="ajax.js"></script>
+	<script type="text/javascript" src="doubleselect.js"></script>
+	<script type="text/javascript">
+	window.onload = function() {
+		var doubleSelect1 = new DoubleSelect(
+			"category1", "category2", "selectCategory.jsp", "&parent=category1");
+
+		var doubleSelect2 = new DoubleSelect(
+			"category2", "category3", "selectCategory.jsp", "&parent=category2");
+	}
+	</script>
+	<link rel="stylesheet" type="text/css" href="naversearch.css">
+</head>
+<body>
+
+<select id="category1">
+	<option value="">선택하세요</option>
+	<option value="">------</option>
+	<option value="001">노트북</option>
+	<option value="002">데스크톱</option>
+</select>
+&gt;
+<select id="category2"></select>
+&gt;
+<select id="category3"></select>
+
+</body>
+</html>
+
+Chap 16 Ajax로 구현한 채팅
+ 1. 채팅 프로그램의 구성 
+ 2. 서버 측 프로그램 
+     2.1 테이블 생성 
+ : [table.sql]
+create table CHAT_MESSAGE (
+	MESSAGE_ID    NUMBER NOT NULL PRIMARY KEY,
+	NICKNAME      VARCHAR2(20) NOT NULL,
+	REGISTER_DATE DATE NOT NULL,
+	MESSAGE       VARCHAR2(200) NOT NULL
+);
+
+create sequence MESSAGE_ID_SEQ;
+
+     2.2 로그인/로그아웃 처리 
+ : [login.jsp]
+<?xml version="1.0" encoding="euc-kr" ?>
+<%@ page contentType = "text/xml; charset=euc-kr" %>
+<%
+	request.setCharacterEncoding("utf-8");
+	String nickName = request.getParameter("nickName");
+%>
+<result>
+	<code>success</code>
+	<nickName><%= nickName %></nickName>
+</result>
+
+ : [logout.jsp]
+<?xml version="1.0" encoding="euc-kr" ?>
+<%@ page contentType = "text/xml; charset=euc-kr" %>
+<%
+	request.setCharacterEncoding("utf-8");
+	String nickName = request.getParameter("nickName");
+%>
+<result>
+	<code>success</code>
+	<nickName><%= nickName %></nickName>
+</result>
+
+     2.3 메시지 전송 처리 
+ : [sendMessage.jsp]
+<?xml version="1.0" encoding="euc-kr" ?>
+<%@ page contentType = "text/xml; charset=euc-kr" %>
+<%@ page import = "java.sql.*" %>
+<%@ page import = "java.util.List" %>
+<%@ page import = "util.DB" %>
+<%@ page import = "util.Util" %>
+<%
+	request.setCharacterEncoding("utf-8");
+	String nickName = request.getParameter("nickName");
+	String msg = request.getParameter("msg");
+	String message = "["+nickName+"] "+msg;
+	
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	
+	boolean isSuccess = true;
+	
+	try {
+		conn = DB.getConnection();
+		pstmt = conn.prepareStatement(
+			"insert into CHAT_MESSAGE (NICKNAME, REGISTER_DATE, MESSAGE) "+
+			"values (?, now(), ?)");
+		pstmt.setString(1, nickName);
+		pstmt.setString(2, message);
+		pstmt.executeUpdate();
+	} catch(SQLException ex) {
+		isSuccess = false;
+	} finally {
+		if (pstmt != null) try { pstmt.close(); } catch(SQLException ex) {}
+		if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+	}
+%>
+<result>
+	<code><%= isSuccess ? "success" : "fail" %></code>
+</result>
+
+     2.4 메시지 로딩 처리 
+ : [loadMessage.jsp]
+<?xml version="1.0" encoding="euc-kr" ?>
+<%@ page contentType = "text/xml; charset=euc-kr" %>
+<%@ page import = "java.sql.*" %>
+<%@ page import = "java.util.List" %>
+<%@ page import = "util.DB" %>
+<%@ page import = "util.Util" %>
+<%
+	request.setCharacterEncoding("utf-8");
+	int lastMsgId = Integer.parseInt(request.getParameter("lastMsgId"));
+	List messageList = new java.util.ArrayList();
+	
+	Connection conn = null;
+	Statement stmt = null;
+	ResultSet rs = null;
+	
+	int newLastMsgId = 0;
+	
+	boolean isSuccess = true;
+	
+	try {
+		conn = DB.getConnection();
+		stmt = conn.createStatement();
+		
+		if (lastMsgId == 0) {
+			rs = stmt.executeQuery("select max(MESSAGE_ID) from CHAT_MESSAGE");
+			if (rs.next()) {
+				newLastMsgId = rs.getInt(1);
+			}
+		} else {
+			rs = stmt.executeQuery("select * from CHAT_MESSAGE "+
+			    "where MESSAGE_ID > "+lastMsgId + " order by MESSAGE_ID asc");
+			while(rs.next()) {
+				messageList.add(rs.getString("MESSAGE"));
+				newLastMsgId = rs.getInt("MESSAGE_ID");
+			}
+		}
+	} catch(SQLException ex) {
+		isSuccess = false;
+	} finally {
+		if (rs != null) try { rs.close(); } catch(SQLException ex) {}
+		if (stmt != null) try { stmt.close(); } catch(SQLException ex) {}
+		if (conn != null) try { conn.close(); } catch(SQLException ex) {}
+	}
+%>
+<result>
+	<code><%= isSuccess ? "success" : "fail" %></code>
+	<%	if (isSuccess) { %>
+	<lastMsgId><%= newLastMsgId %></lastMsgId>
+	<messages>
+	<%		for (int i = 0 ; i < messageList.size() ; i++) { %>
+		<message><![CDATA[<%= Util.toJS((String)messageList.get(i)) %>]]></message>
+	<%		} %>
+	</messages>
+	<%	} %>
+</result>
+
+ 3. 클라이언트 모델 부분: chat.ChatModel 클래스 
+     3.1 로그인/로그아웃 처리 부분 
+     3.2 메시지 로딩 부분 
+     3.3 메시지 전송 부분 
+     3.4 컨트롤러에 이벤트를 전달하는 notify 함수 
+ 4. 클라이언트 컨트롤러 부분: chat.Chat 클래스 
+ 5. 클라이언트 뷰 부분: chat.ChatUI 클래스 
+     5.1 화면 생성 부분 
+     5.2 로그인 처리 부분 
+     5.3 메시지 입력과 로딩 처리 부분 
+     5.4 로그아웃 처리/로그인 창 제어/대화 창 제어/에러 메시지 출력 부분
+ : [chat.js]
+var chat = {};
+
+chat.LOGIN_SUCCESS = 0x01;
+chat.LOGIN_ERROR = 0x02;
+chat.MESSAGE_LOADED_SUCCESS = 0x04;
+chat.MESSAGE_LOADED_ERROR = 0x08;
+chat.MESSAGE_SENDED_SUCCESS = 0x10;
+chat.MESSAGE_SENDED_ERROR = 0x10;
+chat.LOGOUT_SUCCESS = 0x40;
+chat.LOGOUT_ERROR = 0x80;
+
+chat.ChatModel = function() {
+	this.nickName = null;
+	this.lastMsgId = 0;
+	this.listeners = new Array();
+	
+	this.loadMessageTimer = null;
+}
+chat.ChatModel.prototype = {
+	getNickName: function() {
+		return this.nickName;
+	},
+	login: function(nickName) {
+		// 채팅 서버에 로그인한다.
+		var params = "nickName="+encodeURIComponent(nickName);
+		new ajax.xhr.Request("login.jsp", params, 
+			this.logedIn, "POST", this);
+	},
+	logedIn: function(req) {
+		if (req.readyState == 4) {
+			if (req.status == 200) {
+				var xmlDoc = req.responseXML;
+				this.nickName = xmlDoc.getElementsByTagName("nickName")
+				                       .item(0).firstChild.nodeValue;
+				
+				this.notify(chat.LOGIN_SUCCESS);
+				this.loadMessage();
+			} else {
+				this.notify(chat.LOGIN_ERROR, req.status);
+			}
+		}
+	},
+	logout: function() {
+		// 채팅 서버에서 로그아웃한다.
+		var params = "nickName="+encodeURIComponent(this.nickName);
+		new ajax.xhr.Request("logout.jsp", params, 
+			this.logedOut, "POST", this);
+	},
+	logedOut: function(req) {
+		if (req.readyState == 4) {
+			if (req.status == 200) {
+				this.notify(chat.LOGOUT_SUCCESS);
+			} else {
+				this.notify(chat.LOGOUT_ERROR, req.status);
+			}
+		}
+	},
+	loadMessage: function() {
+		if (this.loadMessageTimer != null) {
+			clearTimeout(this.loadMessageTimer);
+		}
+		var params = "lastMsgId="+this.lastMsgId;
+		new ajax.xhr.Request("loadMessage.jsp", params, 
+			this.loadedMessage, "POST", this);
+	},
+	loadedMessage: function(req) {
+		if (req.readyState == 4) {
+			if (req.status == 200) {
+				var xmlDoc = req.responseXML;
+				var code = xmlDoc.getElementsByTagName("code")
+				                 .item(0).firstChild.nodeValue;
+				if (code == 'success') {
+					var lastMsgId = parseInt(
+						xmlDoc.getElementsByTagName("lastMsgId")
+						      .item(0).firstChild.nodeValue
+					);
+					if (lastMsgId != 0) {
+						this.lastMsgId = lastMsgId;
+					}
+					var msgs = new Array();
+					var messageTags = xmlDoc.getElementsByTagName("message");
+					for (var i = 0 ; i < messageTags.length ; i++) {
+						msgs[msgs.length] = messageTags.item(i)
+						                    .firstChild.nodeValue;
+					}
+					
+					this.notify(chat.MESSAGE_LOADED_SUCCESS, msgs);
+					
+					var model = this;
+					var reloadFunc = function() {
+						model.loadMessage.apply(model);
+					}
+					this.loadMessageTimer = setTimeout(reloadFunc, 500);
+				} else {
+					this.notify(chat.MESSAGE_LOADED_ERROR, "실패");
+				}
+			} else {
+				this.notify(chat.MESSAGE_LOADED_ERROR, req.status);
+			}
+		}
+	},
+	sendMessage: function(msg) {
+		// 메시지를 전송한다.
+		var params = "nickName="+encodeURIComponent(this.nickName)+
+		             "&msg="+encodeURIComponent(msg);
+		new ajax.xhr.Request("sendMessage.jsp", params, 
+			this.messageSended, "POST", this);
+	},
+	messageSended: function(req) {
+		if (req.readyState == 4) {
+			if (req.status == 200) {
+				this.notify(chat.MESSAGE_SENDED_SUCCESS);
+			} else {
+				this.notify(chat.MESSAGE_SENDED_ERROR, req.status);
+			}
+		}
+	},
+	addListener: function(listener) {
+		this.listeners[this.listeners.length] = listener;
+	},
+	removeListener: function(listener) {
+		var tempListeners = new Array();
+		for (var i = 0 ; i < this.listeners.length ; i++) {
+			if (this.listeners[i] != listener) {
+				tempListeners.add(this.listeners[i]);
+			}
+		}
+		this.listeners = tempListeners;
+	},
+	notify: function(type, msgs) {
+		for (var i = 0 ; i < this.listeners.length ; i++) {
+			this.listeners[i].actionPerformed(type, msgs);
+		}
+	}
+}
+
+chat.Chat = function() {
+	this.chatModel = new chat.ChatModel();
+	this.chatUI = new chat.ChatUI();
+	
+	this.chatModel.addListener(this);
+	this.chatUI.setChat(this);
+	
+	this.chatUI.render();
+}
+chat.Chat.prototype = {
+	login: function(nickName) {
+		this.chatModel.login(nickName);
+	},
+	logout: function() {
+		this.chatModel.logout();
+	},
+	actionPerformed: function(type, msgs) {
+		if (type == chat.LOGIN_SUCCESS) {
+			this.chatUI.processLoginSuccess();
+		} else if (type == chat.LOGIN_ERROR) {
+			this.chatUI.processError(type, msgs);
+		} else if (type == chat.MESSAGE_LOADED_SUCCESS) {
+			for (var i = 0 ; i < msgs.length ; i++) {
+				this.chatUI.appendMessage(msgs[i]);
+			}
+		} else if (type == chat.MESSAGE_LOADED_ERROR) {
+			this.chatUI.processError(type, msgs);
+		} else if (type == chat.MESSAGE_SENDED_SUCCESS) {
+			
+		} else if (type == chat.MESSAGE_SENDED_ERROR) {
+			this.chatUI.processError(type, msgs);
+		} else if (type == chat.LOGOUT_SUCCESS) {
+			this.chatUI.processLogoutSuccess();
+		} else if (type == chat.LOGOUT_ERROR) {
+			this.chatUI.processError(type, msgs);
+		}
+	},
+	sendMessage: function(message) {
+		this.chatModel.sendMessage(message);
+	}
+}
+
+chat.ChatUI = function() {
+	this.chat = null;
+	
+	this.loginWinDiv = null;
+	this.nickNameInput = null;
+	
+	this.chatWinDiv = null;
+	this.chatArea = null;
+	this.messageInput = null;
+}
+chat.ChatUI.prototype = {
+	setChat: function(chat) {
+		this.chat = chat;
+	},
+	render: function() {
+		this.makeLoginWindow();
+		this.makeChatWindow();
+	},
+	makeLoginWindow: function() {
+		var loginWinDiv = document.createElement("div");
+		var nickNameInput = document.createElement("input");
+		nickNameInput.type = "text";
+		nickNameInput.size = "10";
+		
+		var loginBtn = document.createElement("input");
+		loginBtn.type = "button";
+		loginBtn.value = "로그인";
+		
+		loginWinDiv.appendChild(nickNameInput);
+		loginWinDiv.appendChild(loginBtn);
+
+		loginWinDiv.style.border = "1px solid #000";
+		loginWinDiv.style.position = 'absolute';
+		loginWinDiv.style.width = '400px';
+		loginWinDiv.style.height = '400px';
+		loginWinDiv.style.left = '20px';
+		loginWinDiv.style.top = '10px';
+		
+		document.body.appendChild(loginWinDiv);
+		
+		ajax.Event.addListener(loginBtn, "click",
+			ajax.Event.bindAsListener(this.doClickOnLoginBtn, this));
+		
+		this.nickNameInput = nickNameInput;
+		this.loginWinDiv = loginWinDiv;
+	},
+	makeChatWindow: function() {
+		var chatWinDiv = document.createElement("div");
+		
+		var chatArea = document.createElement("div");
+		chatArea.style.overflow = 'scroll';
+		chatArea.style.height = '350px';
+		
+		var messageInput = document.createElement("input");
+		messageInput.type = "text";
+		messageInput.style.width = "98%";
+
+		var logoutBtn = document.createElement("input");
+		logoutBtn.type = "button";
+		logoutBtn.value = "로그아웃";
+		
+		chatWinDiv.appendChild(chatArea);
+		chatWinDiv.appendChild(messageInput);
+		chatWinDiv.appendChild(document.createElement("br"));
+		chatWinDiv.appendChild(logoutBtn);
+		
+		chatWinDiv.style.border = "1px solid #000";
+		chatWinDiv.style.position = 'absolute';
+		chatWinDiv.style.width = '400px';
+		chatWinDiv.style.height = '400px';
+		chatWinDiv.style.left = '20px';
+		chatWinDiv.style.top = '10px';
+		chatWinDiv.style.visibility = 'hidden';
+		
+		document.body.appendChild(chatWinDiv);
+		
+		ajax.Event.addListener(messageInput, "keydown",
+			ajax.Event.bindAsListener(this.doKeyDownOnInput, this));
+		
+		ajax.Event.addListener(logoutBtn, "click",
+			ajax.Event.bindAsListener(this.doClickOnLogoutBtn, this));
+		
+		this.messageInput = messageInput;
+		this.chatArea = chatArea;
+		this.chatWinDiv = chatWinDiv;
+	},
+	doClickOnLoginBtn: function(e) {
+		if (this.nickNameInput.value != '') {
+			this.chat.login(this.nickNameInput.value);
+		} else {
+			alert("닉네임을 입력하세요");
+			this.nickNameInput.focus();
+		}
+	},
+	processLoginSuccess: function() {
+		this.hiddenLogin();
+		this.showChat();
+	},
+	doKeyDownOnInput: function(e) {
+		var event = window.event || e;
+		if (e.keyCode == 13) { // 엔터키
+			var msg = this.messageInput.value;
+			this.messageInput.value = "";
+			this.chat.sendMessage(msg);
+		}
+	},
+	appendMessage: function(msg) {
+		this.chatArea.innerHTML += msg + "<br/>";
+		this.chatArea.scrollTop = 
+			this.chatArea.scrollHeight-this.chatArea.clientHeight;
+	},
+	doClickOnLogoutBtn: function() {
+		this.chat.logout();
+	},
+	processLogoutSuccess: function() {
+		this.hiddenChat();
+		this.showLogin();
+		alert("로그아웃하셨습니다");
+	},
+	showLogin: function() {
+		this.loginWinDiv.style.visibility = 'visible';
+	},
+	hiddenLogin: function() {
+		this.loginWinDiv.style.visibility = 'hidden';
+	},
+	showChat: function() {
+		this.chatArea.innerHTML = "";
+		this.chatWinDiv.style.visibility = 'visible';
+		this.messageInput.focus();
+	},
+	hiddenChat: function() {
+		this.chatWinDiv.style.visibility = 'hidden';
+	},
+	processError: function(type, errMsg) {
+		if (type == chat.LOGIN_ERROR) {
+			alert("로그인에 실패했습니다:"+errMsg);
+		} else if (type == chat.MESSAGE_LOADED_ERROR) {
+			alert("채팅 메시지 로딩에 실패했습니다:"+errMsg);
+		} else if (type == chat.MESSAGE_SENDED_SUCCESS) {
+			
+		} else if (type == chat.MESSAGE_SENDED_ERROR) {
+			alert("채팅 메시지 전송에 실패했습니다:"+errMsg);
+		} else if (type == chat.LOGOUT_ERROR) {
+			alert("로그아웃에 실패했습니다:"+errMsg);
+		}
+	}
+}
+
+ 6. 전체적인 실행 흐름 
+ 7. chat.js 사용 예제 및 실행 결과 
+  : [chatClient.html]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=euc-kr" />
+	<title>채팅</title>
+	<script type="text/javascript" src="ajax.js"></script>
+	<script type="text/javascript" src="chat.js"></script>
+	<script type="text/javascript">
+	window.onload = function() {
+		var chatting = new chat.Chat();
+	}
+	</script>	
+</head>
+<body>
+
+</body>
+</html>
