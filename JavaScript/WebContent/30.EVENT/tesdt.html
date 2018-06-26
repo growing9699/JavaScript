@@ -1,0 +1,29 @@
+<html>
+  <body>
+	
+		<script type="text/javascript">
+	
+	function passwordCheck(){
+		   var password = document.getElementById("password").value;
+		   var passwordCheck = document.getElementById("passwordCheck").value;
+
+		   if(passwordCheck == ""){
+		      document.getElementById("passwordCheckText").innerHTML = ""
+		   } else if (password != passwordCheck) {
+		      document.getElementById("passwordCheckText").innerHTML = "<b><font color=red size=2pt> 비밀번호가 다릅니다. </font></b>"
+		   } else {
+		      document.getElementById("passwordCheckText").innerHTML = "<b><font color=green size=2pt> 비밀번호가 일치합니다. </font></b>"
+		   }
+		}
+	 
+	</script>
+	        비밀번호: <input type="password" name="password" id="password"/>
+	    <br/>
+ 		비밀번호 확인: <input type="password" name="passwordCheck" id="passwordCheck" onkeyup="passwordCheck()"/>&nbsp;<span id="passwordCheckText"></span>
+		<br/>
+		<input type="submit" value="회원가입"/>
+	
+	</body>
+</html>
+	
+	

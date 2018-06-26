@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+  <input id="target" type="name" />
+<script>
+var t = document.getElementById('target');
+t.addEventListener('blur', function(event){//나오는 순간발생
+    alert('blur');  
+});
+t.addEventListener('focus', function(event){//포커스하는 순간 발생
+    alert('focus'); 
+});
+</script>
+
+</body>
+</html>

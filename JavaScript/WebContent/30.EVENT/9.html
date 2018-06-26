@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+ <input type="button" id="target" value="button" />
+<script>
+    var t = document.getElementById('target');
+    t.onclick = function(event){
+       alert(1);
+    }
+    
+    t.onclick = function(event){
+        alert(2);//이방식은 하나만 출력..덮어쓰는것
+     }
+    
+</script>
+</body>
+</html>

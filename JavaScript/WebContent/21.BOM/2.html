@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<script>
+    alert('Hello world');
+    window.alert('Hello world');
+    
+    var a = 1;
+    alert(a);
+    alert(window.a);
+    
+    var a = {id:1};
+    alert(a.id);
+    alert(window.a.id);
+    
+</script>
+<body>
+	전역객체 Window
+	Window 객체는 모든 객체가 소속된 객체이고, 전역객체이면서, 창이나 프레임을 의미한다. 
+	
+	Window 객체는 식별자 window를 통해서 얻을 수 있다. 또한 생략 가능하다. 
+	Window 객체의 메소드인 alert을 호출하는 방법은 아래와 같다.
+	아래는 전역변수 a에 접근하는 방법이다.
+	객체를 만든다는 것은 결국 window 객체의 프로퍼티를 만드는 것과 같다.
+	예제를 통해서 알 수 있는 것은 전역변수와 함수가 사실은 
+	window 객체의 프로퍼티와 메소드라는 것이다.
+	 또한 모든 객체는 사실 window의 자식이라는 것도 알 수 있다.
+	이러한 특성을 ECMAScript에서는 Global 객체라고 부른다. 
+	ECMAScript의 Global 객체는 호스트 환경에 따라서 이름이 다르고 하는
+	역할이 조금씩 다르다. 
+	웹브라우저 자바스크립트에서 Window 객체는 ECMAScript의 전역객체이면서
+	동시에 웹브라우저의 창이나 프레임을 제어하는 역할을 한다.
+</body>
+</html>

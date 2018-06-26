@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+<ul>
+    <li>HTML</li>
+    <li class="active">CSS</li>
+    <li class="active">JavaScript</li>
+    <!-- html에서는 클래스인것이 자스에서는 클래스네임이라 불림 -->
+</ul>
+<script>
+ 
+    var lis = document.getElementsByClassName('active');//유사배열 에담음
+    for(var i=0; i < lis.length; i++){
+        lis[i].style.color='red';   
+    }
+</script>
+</body>
+</html>

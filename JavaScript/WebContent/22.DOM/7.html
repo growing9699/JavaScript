@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+<ul>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li>JavaScript</li>
+</ul>
+<ol>
+    <li>HTML</li>
+    <li class="active">CSS</li>
+    <li class="active">CSS</li>
+    <li>JavaScript</li>
+</ol>
+ 
+<script>//querySelector는 하나만!
+    var li = document.querySelector('li');//선택자에 해당하는 하나의 엘리먼트만 리턴 맨위 li
+    li.style.color='red';
+    var li = document.querySelector('.active');//이것도 하나만..
+    li.style.color='green';
+    
+</script>
+</body>
+</html>

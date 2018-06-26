@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        window.onload = function () {//페이지가 로드가 되면
+            document.body.onclick = function (e) {//바디태그를 클릭하면
+                // 이벤트 객체를 설정합니다.
+                var event = e || window.event;
+                document.body.innerHTML = '';
+                for (var key in event) {//이벤트로부터 키를 뽑아낸다
+                    document.body.innerHTML += '<p>' + key + ': ' + event[key] + '</p>';
+                }
+            };
+        };
+    </script>
+</head>
+<body>
+    <h1 id="header">Click</h1>
+</body>
+</html>

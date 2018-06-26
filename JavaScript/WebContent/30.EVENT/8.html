@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<input type="button" id="target" value="button" />
+<script>
+
+    var t = document.getElementById('target');
+    t.addEventListener('click', function(event){
+        alert(1);
+    });
+    t.addEventListener('click', function(event){
+        alert(2);//이것은 추가하는것이라 순차적 실행
+    });
+</script>
+
+
+</body>
+</html>

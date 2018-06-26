@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        // 변수를 선언합니다.
+        var product = {
+            name: 'Microsoft Visual Studio 2010 Ultimate',
+            price: '15,000,000원',
+            language: '한국어',
+            supportOS: 'Win 32/64',
+            subscription: true
+        };
+        // 출력합니다.
+        var output = '';
+        for (var key in product) {//프로덕트에서 하나식 꺼내서 키에 저장
+            output += '●' + key + ': ' + product[key] + '\n';
+        //키와 값을꺼냄
+        }
+        alert(output);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

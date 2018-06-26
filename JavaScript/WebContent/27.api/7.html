@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="target">
+    Hello world
+</p>
+<script>
+    var target = document.getElementById('target');
+    
+    target.setAttribute('class', 'important');// attribute 속성 방식
+  
+    target.className = 'important';  // property 방식//이방식이 코드도적고 속도도 빠르다
+    //하지만 주의점
+   /*  실제 html 속성의 이름과 다른 이름을 갖는 경우가 있다. 그것은 자바스크립트의 이름 규칙 때문이다.
+class		className
+readonly	readOnly
+rowspan		rowSpan
+colspan		colSpan
+usemap		userMap
+frameborder	frameBorder
+for			htmlFor
+maxlength	maxLength */
+</script>
+
+</body>
+</html>

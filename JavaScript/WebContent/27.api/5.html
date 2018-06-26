@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<ul>
+    <li class="marked">html</li>
+    <li>css</li>
+    <li id="active">JavaScript
+        <ul>
+            <li>JavaScript Core</li>
+            <li class="marked">DOM</li>
+            <li class="marked">BOM</li>
+        </ul>
+    </li>
+</ul>
+<script>//2가지 차이점을 봐보자
+    var list = document.getElementsByClassName('marked');//이것은 문서전체에서 marked라고 된것을찾는거고
+    console.group('document');
+    for(var i=0; i<list.length; i++){
+        console.log(list[i].textContent);
+    }
+    console.groupEnd();
+     
+    console.group('active');
+    var active = document.getElementById('active');      
+    var list = active.getElementsByClassName('marked');//이것은 id가 active인 li태그 하위에 있는 marked만!
+    for(var i=0; i<list.length; i++){
+        console.log(list[i].textContent);
+    }
+    console.groupEnd();
+</script>
+
+</body>
+</html>

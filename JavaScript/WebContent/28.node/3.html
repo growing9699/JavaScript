@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<body id="start">
+<ul>
+    <li><a href="./532">html</a></li> 
+    <li><a href="./533">css</a></li>
+    <li><a href="./534">JavaScript</a>
+        <ul>
+            <li><a href="./535">JavaScript Core</a></li>
+            <li><a href="./536">DOM</a></li>
+            <li><a href="./537">BOM</a></li>
+        </ul>
+    </li>
+</ul>
+<script>//재귀함수 어떠한 함수가 호출될때 자기자신을 호출
+function traverse(target, callback){
+    if(target.nodeType === 1){//Node.ELEMENT_NODE
+        //if(target.nodeName === 'A')
+        callback(target);
+        var c = target.childNodes;
+        for(var i=0; i<c.length; i++){
+            traverse(c[i], callback);       
+        }   
+    }
+}
+traverse(document.getElementById('start'), function(elem){//traverse는 하나씩조회한다는뜻
+    //첫번재 인자로 우리가 조회하고자하는 엘리먼트지정,바디태그 엘리먼트로 전달
+	console.log(elem);//elem은 익명함수, 현재 바디태그안에서 조회하고있는 엘리먼트를  찍는것 
+	if(elem.nodeName === 'A'){ 
+	elem.style.color = 'red';
+	}
+});
+</script>
+</body>
+</html>

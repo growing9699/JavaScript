@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+<ul>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li>JavaScript</li>
+</ul>
+<script>		//문서전체 객체 쩜
+    var lis = document.getElementsByTagName('li');
+    			//get은 가져온다 Elements는 태그들이라는뜻 태그의 이름을 통해 태그 객체들을 가져온다
+    			//그러면 lis는 유사배열이고  
+    for(var i=0; i < lis.length; i++){
+        lis[i].style.color='red';   
+    }
+    			//결국 태그를 어떻게 조회해가는지 알아가는걸 봐보자
+</script>
+</body>
+</html>

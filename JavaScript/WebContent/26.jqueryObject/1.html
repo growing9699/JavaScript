@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<ul>
+    <li>html</li>
+    <li>css</li>
+    <li>JavaScript</li>
+</ul>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    console.log($('li').length);
+    console.log($('li')[0]);
+  
+    var li = $('li');//$('li')는 제이커리의 함수인데 li태그 엘리먼트의
+    //유사배열 객체를 얻어내는 함수이다
+   
+    li.css('text-decoration', 'underline');//내부적으로 암시적 반복
+    
+    for(var i=0; i<li.length; i++){
+        console.log(li[i]);
+    }
+</script>
+
+</body>
+</html>

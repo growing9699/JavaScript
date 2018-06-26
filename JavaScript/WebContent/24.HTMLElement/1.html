@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+ <ul>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li id="active">JavaScript</li>
+</ul>
+
+<script>
+
+    var li = document.getElementById('active');
+    console.log(li.constructor.name);//li¶ó´Â °´Ã¼ÀÇ ÀÌ¸§À» ¾Ë¾Æ³¿//HTMLLIElement 
+    
+    var lis = document.getElementsByTagName('li');//À¯»ç¹è¿­ °´Ã¼¾ò¾î³¿
+    console.log(lis.constructor.name);//HTMLCollection
+    
+</script>  
+
+</body>
+
+
+
+
+
+

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <input type="button" id="hw" value="실행버튼" />
+    <!--두번재방법은 html코드안에 자바스크립트가 존재안하게끔만듬 -->
+    
+  <script type="text/javascript">
+      var hw = document.getElementById('hw');//id가 hw인 태그(element)
+      hw.addEventListener('click', function(){//그 태그를 가져와서 클릭했을때 함수실행
+          alert('Hello world');
+      })
+  </script>
+    
+</body>
+</html>

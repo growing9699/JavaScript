@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<ul>
+    <li>html</li>
+    <li>css</li>
+    <li>JavaScript</li>
+</ul>
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    var li = $('li');//제이커리 메소드중 map 메소드는 인자로 함수받음
+    li.map(function(index, elem){//0과 , dom객체 전달 HTMLLIElement
+        console.log(index, elem);
+        $(elem).css('color', 'red');//돔객체를 제이커리함수안에 넣어서 사용
+    })
+</script>
+https://api.jquery.com/category/css/ 
+<br/>
+제이커리 api
+
+</body>
+</html>

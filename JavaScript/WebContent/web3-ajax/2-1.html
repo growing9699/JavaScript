@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <body>
+    <article>
+ 
+    </article>
+    
+    <input type="button" value="fetch" onclick="
+      fetch('3.html').then(function(response){
+        response.text().then(function(text){
+          document.querySelector('article').innerHTML = text;//3.html의 내용을 text에 담아서 출력
+          //querySelector('article')아티클이라는 태그를 선택
+        })
+      });
+    ">
+  </body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <script>
+       // 변수를 선언합니다.
+       var child = window.open('', '', 'width=300, height=200');
+       child.moveTo(0, 0);//새창의 어느위치 고정
+
+       // 1초마다 함수를 실행합니다.
+       setInterval(function () {
+           child.moveBy(10, 10);//10픽셀씩 이동
+       }, 1000);
+    </script>
+</head>
+<body>
+
+</body>
+</html>
+    

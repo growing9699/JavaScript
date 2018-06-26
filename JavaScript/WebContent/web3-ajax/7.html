@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+	<head>
+	  <title>WEB1 - Welcome</title>
+	  <meta charset="utf-8">
+	</head>
+<body>
+
+<a href="http://localhost:8080/JavaScript/web3-ajax/7.html#!3.html">three</a>
+<!-- 이거는  다시 리로드 해줘야 이동되는 단점.. -->
+	
+  <h1><a href="#!welcome.html">WEB</a></h1>
+
+  <ol id="nav">
+	    <li><a href="#!3.html" onclick="fetchPage('3.html')">html</a></li>
+	    <li><a href="#!welcome.html" onclick="fetchPage('welcome.html')">css</a></li>
+	  <!--   현재페이지에서 "#!welcome.html"만 해주면 주소는 바뀌지만 실제적용을 하려면 새로고침해야함 그것을 같이 보완해주는게 
+	    onclick="fetchPage('welcome.html')"이다 하지만 다른곳에서 샵이붙은 주소로 링크걸면 그건 적용됨-->
+  </ol>
+  
+  <article>
+  </article>
+  
+  <script>
+  function fetchPage(name){
+    fetch(name).then(function(response){
+      response.text().then(function(text){
+        document.querySelector('article').innerHTML = text;
+      })
+    });
+  }
+  
+  if(location.hash){//a href="#!3.html"과 처음에 연결됨
+    fetchPage(location.hash.substr(2));
+  } else {
+    fetchPage('welcome.html');
+  }
+  
+  </script>
+  
+</body>
+</html>

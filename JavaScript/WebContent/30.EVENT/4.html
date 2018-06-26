@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+ <input type="button" id="target" value="button" />
+<script>
+    var t = document.getElementById('target');
+    t.onclick = function(event){//event객체를 전달
+        alert('Hello world, '+event.target.value)//target은 이벤트가 어디서 발생한것인지 알려주는 프로퍼티
+    	//event.target은 <input type="button" id="target" value="button" />과 같음
+        console.dir(event);//인자로 들어온 어떤 객체의 여러가지 프로퍼티를 탐색하게해주는것
+    }			
+    </script>
+
+</body>
+</html>

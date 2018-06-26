@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<ul>
+	    <li>HTML</li>
+	    <li>CSS</li>
+	    <li id="active">JavaScript</li>
+	</ul>
+	
+	<script>
+	console.group('before');//시각적으로 콜솔을 비포와 에프터로 나눠준다
+	var lis = document.getElementsByTagName('li');
+	for(var i = 0; i < lis.length; i++){
+	    console.log(lis[i]);
+	}
+	console.groupEnd();
+	
+	console.group('after');
+	lis[1].parentNode.removeChild(lis[1]);//lis[1]은   <li>CSS</li> 이다
+	//그 엘리먼트를 삭제
+	for(var i = 0; i < lis.length; i++){
+	    console.log(lis[i]);
+	}
+	console.groupEnd();
+	</script>
+	
+</body>
+</html>

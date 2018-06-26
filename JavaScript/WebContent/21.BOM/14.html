@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <input type="text" onkeyup="winmessage(this.value)" />
+    			<!-- onkeypress는 타이핑할때마다 실시간으로  winmessage함수 호출 ,this.value는 텍스트에 적힌값 -->
+    비밀번호: <input type="password" name="password" id="password"/>
+    비밀번호 확인: <input type="password" name="passwordCheck" id="passwordCheck" onkeyup="passwordCheck()"/>
+    			&nbsp;<span id="passwordCheckText"></span>
+    
+    
+    <script>
+    function winmessage(msg){
+        window.document.getElementById('message').innerText=msg;
+    }
+    
+    function passwordCheck(){
+		   var password = document.getElementById("password").value;
+		   var passwordCheck = document.getElementById("passwordCheck").value;
+
+		   if(passwordCheck == ""){
+		      document.getElementById("passwordCheckText").innerHTML = ""
+		   } else if (password != passwordCheck) {
+		      document.getElementById("passwordCheckText").innerHTML = "<b><font color=red size=2pt> 비밀번호가 다릅니다. </font></b>"
+		   } else {
+		      document.getElementById("passwordCheckText").innerHTML = "<b><font color=green size=2pt> 비밀번호가 일치합니다. </font></b>"
+		   }
+		}
+    
+    </script>
+    
+     <div id="message"></div>
+     
+</body>
+</html>

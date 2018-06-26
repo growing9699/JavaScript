@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <script>
+       // 변수를 선언합니다.
+       var child = window.open('', '', 'width=300, height=200');
+       var width = screen.width;//전체창의 가로길이 가져옴
+
+       var height = screen.height;
+       child.moveTo(0, 0);
+       child.resizeTo(width, height);//가로 세로 길이 가져다가 새창을 지정
+
+       // 1초마다 함수를 실행합니다.
+       setInterval(function () {
+           child.resizeBy(-20, -20);//20픽셀씩 줄이면서 보여줌
+           child.moveBy(10, 10);
+       }, 2000);
+    </script>
+</head>
+<body>
+
+</body>
+</html>
+    

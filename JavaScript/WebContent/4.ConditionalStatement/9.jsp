@@ -1,0 +1,26 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<script>
+if(true || true){
+    alert(1);
+}
+if(true || false){
+    alert(2);
+}
+if(false || true){
+    alert(3);
+}
+if(false || false){
+    alert(4);
+}
+
+</script>
+</body>
+</html>

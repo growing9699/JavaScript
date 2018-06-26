@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<ul>
+    <li>html</li>
+    <li>css</li>
+    <li id="active" class="important current">JavaScript</li>
+</ul>
+<script>
+function loop(){
+    for(var i=0; i<active.classList.length; i++){//active.classList(유사배열)는 현재 2개임(important current)
+        console.log(i, active.classList[i]);
+    }
+}
+// 클래스를 추가
+</script>
+<input type="button" value="DOMTokenList" onclick="console.log(active.classList);" />
+<input type="button" value="조회" onclick="loop();" />
+<input type="button" value="추가" onclick="active.classList.add('marked');" />
+<input type="button" value="제거" onclick="active.classList.remove('important');" />
+<input type="button" value="토글" onclick="active.classList.toggle('current');" />
+토글은 제거도하고 다시 생성도 하고 반복함
+
+</body>
+</html>

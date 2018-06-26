@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<ul>
+    <li>html</li>
+    <li>css</li>
+    <li id="active" class="important current">JavaScript</li>
+</ul>
+<script>
+console.log(document.getElementById('active').tagName)
+//tagName은 Element의 속성인건데 상속받아서 사용가능
+//document.getElementById('active')하면 HTMLLIElemnet가 얻어지고
+//HTMLLIElemnet이것은 HTMLElemnet가 부모이고 HTMLElemnet는 Element가 부모임
+</script>
+
+</body>
+</html>

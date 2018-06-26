@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<a id="anchor" href="http://opentutorials.org">opentutorials</a>
+<ul>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li id="list">JavaScript</li>
+</ul>
+
+<input type="button" id="button" value="button" />
+
+<script>
+    var target = document.getElementById('list');
+    console.log(target.constructor.name);// HTMLLIElement
+	target.type = "square";
+    
+    var target = document.getElementById('anchor');
+    console.log(target.constructor.name);//HTMLAnchorElement
+ 	target.href = " http://www.naver.com";
+    
+    var target = document.getElementById('button');
+    console.log(target.constructor.name);//HTMLInputElement
+ 
+</script> 
+
+</body>
+
+
+
+
+
+

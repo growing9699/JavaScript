@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+  <body>
+  
+    <input type="button" value="fetch" onclick="
+     function callbackme(){
+     console.log('response end');
+     }
+     fetch('3.html').then(callbackme);//fetchs는 서버와 통신을하는것 그래서 3.html을 가져오는것  
+     console.log(1);//그런데 서버와 통신해서 가져오는데 시간이 걸리면 이아래 를 콘솔창에 먼저 출력함
+     console.log(2);//그리고 다시 then(callbackme)를 마지막으로 출력11//
+     ">
+     
+  </body>
+</html>

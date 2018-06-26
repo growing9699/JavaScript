@@ -1,0 +1,581 @@
+***Asynchronous JavaScript and XML***
+ : Ajax? 
+   'Asynchronous JavaScript +XML'의 약자이며 JavaScript를 사용한 비동기 통신으로 
+   클라이언트와 서버 간에 XML 데이터를 주고받는 기술을 말한다. 
+   Ajax를 이용하면 페이지 전환 없이 웹 브라우저 화면을 동적으로 변경할 수 있다. 
+   Ajax 특징을 살펴보기 전에 기존 방식의 사이트는 어떻게 작동하는 살펴보고, 
+   다음에 Ajax 기반 웹 사이트의 특징을 보자.
+
+ : 주요 구성요소
+   - Javascript : Ajax의 프로그램 언어로 Javascript 사용
+   - XMLHttpRequest : 웹 서버와 통신을 담당한다.
+   - DOM : HTML 태그 요소 하나하나를 처리 대상(object)으로 다루기 위한 구조
+   - CSS : 태그 요소의 모양을 정의하기 위한 정의형 언어
+   - XML : 데이터를 전달하기위한 언어
+
+ : html5와 ajax 비교
+   두가지 기술은 기존의 비교적 정적이고 단순한 정보를 보는 매체 즉 웹 문서를 보는 HTML 기술과 
+   javascript 기술을 웹 애플리케이션으로서의 기능, 더 나아가 Web 2.0의 포괄적인 요구사항을 
+   효율적으로 지원하기 위해 개선된 최신 기술이다.
+
+  - 차이점
+    HTML5는 텍스트, 이미지, 미디어 등의 정보의 구조를 정의.
+    AJAX는 HTML의 정보를 조작.
+
+  - 동일한 점
+    두 가지 기술은 웹을 문서를 보는 매체에서 애플리케이션을 구동하기 위한 기술이다.
+
+  - 두가지에 CSS3 한가지를 더해서 설명
+    차세대 웹이라면 현재 Web 2.0이라 불리워지는 Rich Client(멀티미디어와 웹 기반 애플리케이션)과 
+    집단 지능, 매쉬업, 소셜 네트워크, 사용자 참여 정보(UCC), 협업, 지능형 웹 등의 특징을 들 수 있다.
+    이러한 차세대 웹을 구현할 기술의 대표적인 기술이 HTML 5와 CSS3 그리고 AJAX라고 할 수 있다.
+    AJAX는 W3C와 같은 기관에서 표준으로 지정한 바가 없어서 표준 기술이라고 할 수는 없겠지만 
+    업계에서 널리 쓰이고 인정하고 있으므로 현실적인 표준이라고 봐야하지 않을까 한다.
+
+   초창기 인터넷은 단순한 텍스트만을 전송하고 볼수가 있었다. 
+   단지 전 세계가 하나의 네트웍을 통해서 정보를 공유할 수 있다는 것 만으로 대단한 혁신이었다.
+   HTML이라는 정보 표현 태그와 모자익이라는 최초의 브라우저가 나와서 글자의 크기와 색깔을 표현하고 
+   이미지를 보여줌으로써 사람들은 또 한 번 경악을 했다.
+   CGI라는 기술은 수동적으로 문서를 보기만 하던  사용자가 게시판과 같은 프로그램을 통해 
+   웹 서버에 정보를 보내서 저장하고 처리하게 함으로써 사용자 참여가 가능한 웹을 만들었다. 
+   CGI가 발전하여 요즘의 ASP, PHP, JSP, DotNet 과 같은 전문 서버측 프로그래밍 언어가 되었다.
+   자바스크립트는 웹 페이지의 데이터를 조작할 수 있게 하는 기술로 
+   정적인 HTML 정보가 기능적으로 동작하도록 했다.
+   HTML이 문서의 구조와 스타일을 한번에 처리하다 보니 웹의 문서를 정교하게 다루는 것이 어려워 
+   CSS라는 문서의 모양새만을 전문적으로 처리하는 표준 기술이 나와 
+   자바스크립트와 CSS, HTML을 활용하는 DHTML 기술이 발전하여 정교하고 미려한 웹페이지가 
+   동적으로 사용자와 소통하는 것이 가능해서 웹이 단순한 문서가 아니라 데이터를 처리하고 서비스를 제공하는 
+   웹 애플리케이션이 급속도로 발전하게 된다.
+   웹 애플리케이션이 발전하고 Web 2.0 이 확대 됨에 따라 HTML 자체가 문서를 표현하는 기술이 아닌 
+   애플리케이션의 구조를 처리하는 기능을 포함해야 될 필요성이 커져서 W3C는 문서의 정보만을 정의하는 태그에 
+   멀티미디어와 데이터 처리, 통신 기능을 처리할 수 있는 HTML 5를 정의하고 있다.
+   단순히 다이나믹한 웹을 넘어서 협업과 매쉬업 등의 기능들을 구현하기 위해서 웹문서인 HTML을 
+   처리하기 쉬우면서도 표준화된 프로그램 기술이 발전해야 되었는데 그것이 자바스크립트와 XML 
+   그리고 비동기 통신(하나의 통신이 진행중일때 다른 통신을 추가로 수행 가능함) 기술이다. 
+   이러한 3가지 요구를 위해 만들어진 것이 AJAX(asynchronous JavaScript and XML)이다.
+   이러한 추세에 발맞추어 미려하고 정교한 화면 구성을 위한 CSS3도 만들어 졌다.
+
+   그럼 차세대 웹을 위한 3가지 기술을 정리해 보겠습니다. 먼저 간단하게 세가지 기술의 역할을 보면
+     : HTML 5은 정보의 구조를 정의하고 그것을 처리한다.
+     : CSS3는 정보를 미려하고 정교하게 화면에 표현한다.
+     : AJAX는 정보를 조작하고 다른 서비스들과 XML을 이용하여 통신한다.
+
+ [HTML 5]
+   단순히 텍스트와 이미지 정도의 정보를 처리하던 기존 HTML에서 다양한 멀티미디어 정보 표현 
+   : 벡터 이미지(SVG), 동영상(기존에는 ActiveX나 flash 등으로 처리하던 것을 브라우저가 직접 태그를 통해서 처리함)
+   웹 페이지내에서 다른 서버나 서비스와 통신이 가능하고 사용자 정보를 저장하여 웹 프로그램의 기능을 확대한다.
+ [CSS3]
+   정교하고 미려한 화면 구성은 물론이고 다양한 효과와 애니메이션까지 지원한다.
+ [AJAX]
+   단순히 웹페이지 내의 정보만을 조작하던 Javascript나 DHTML 시대를 지나 서버와의 빈번한 통신과 
+   정교한 HTML 구조 조작등이 가능하며 최근 AJAX의 초기 사용 범위를 넘어서 웹 애플리케이션에 
+   필요한 대부분의 기능들을 AJAX로 처리한다.
+
+ : XMLHttpRequest 객체
+
+ : 서버의 응답텍스트를 alert으로 출력해주는 예제
+
+[simpleAjaxApp.html]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=euc-kr" />
+	<title>간단한 Ajax 어플리케이션!</title>
+	<script type="text/javascript">
+	var httpRequest = null;
+	
+	function getXMLHttpRequest() {
+		if (window.ActiveXObject) {
+			try {
+				return new ActiveXObject("Msxml2.XMLHTTP");
+			} catch(e) {
+				try {
+					return new ActiveXObject("Microsoft.XMLHTTP");
+				} catch(e1) {
+					return null;
+				}
+			}
+		} else if (window.XMLHttpRequest) {
+			return new XMLHttpRequest();
+		} else {
+			return null;
+		}
+	}
+	function load(url) {
+		httpRequest = getXMLHttpRequest();
+		httpRequest.onreadystatechange = viewMessage;
+		httpRequest.open("GET", url, true);
+		httpRequest.send(null);
+	}
+	function viewMessage() {
+		if (httpRequest.readyState == 4) {
+			if (httpRequest.status == 200) {
+				alert(httpRequest.responseText);
+			} else {
+				alert("실패: "+httpRequest.status);
+			}
+		}
+	}
+	</script>
+</head>
+<body>
+<input type="button" value="simple.txt" onclick="load('simple.txt')"/>
+<input type="button" value="simple2.txt" onclick="load('simple2.txt')"/>
+<input type="button" value="simple.jsp" onclick="load('simple.jsp')"/>
+<input type="button" value="simple2.jsp" onclick="load('simple2.jsp')"/>
+</body>
+</html>
+
+[simple.txt : UTF-8]
+simple.txt의 응답 텍스트
+
+[simple2.txt : EUC-KR]
+simple2.txt의 응답 텍스트
+
+[simple.jsp]
+<%@ page contentType="text/plain; charset=utf-8" %>
+simple.jsp의 응답 텍스트
+
+[simple2.jsp]
+<%@ page contentType="text/plain; charset=euc-kr" %>
+simple2.jsp의 응답 텍스트
+
+ : XMLHttpRequest 모듈만들기 : httpRequest.js
+[httpRequest.js]
+function getXMLHttpRequest() {
+	if (window.ActiveXObject) {
+		try {
+			return new ActiveXObject("Msxml2.XMLHTTP");
+		} catch(e) {
+			try {
+				return new ActiveXObject("Microsoft.XMLHTTP");
+			} catch(e1) { return null; }
+		}
+	} else if (window.XMLHttpRequest) {
+		return new XMLHttpRequest();
+	} else {
+		return null;
+	}
+}
+var httpRequest = null;
+
+function sendRequest(url, params, callback, method) {
+	httpRequest = getXMLHttpRequest();
+	var httpMethod = method ? method : 'GET';
+	if (httpMethod != 'GET' && httpMethod != 'POST') {
+		httpMethod = 'GET';
+	}
+	var httpParams = (params == null || params == '') ? null : params;
+	var httpUrl = url;
+	if (httpMethod == 'GET' && httpParams != null) {
+		httpUrl = httpUrl + "?" + httpParams;
+	}
+	httpRequest.open(httpMethod, httpUrl, true);
+	httpRequest.setRequestHeader(
+		'Content-Type', 'application/x-www-form-urlencoded');
+	httpRequest.onreadystatechange = callback;
+	httpRequest.send(httpMethod == 'POST' ? httpParams : null);
+}
+
+ : httpRequest.js 모듈사용 예제 : 안녕하세요!!!
+[helloApp.html]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=euc-kr" />
+	<title>안녕하세요!</title>
+	<script type="text/javascript" src="httpRequest.js"></script>
+	<script type="text/javascript">
+	function helloToServer() {
+		var params = "name="+encodeURIComponent(document.f.name.value);
+		sendRequest("hello.jsp", params, helloFromServer, "POST");
+	}
+	function helloFromServer() {
+		if (httpRequest.readyState == 4) {
+			if (httpRequest.status == 200) {
+				alert("서버응답:"+httpRequest.responseText);
+			}
+		}
+	}
+	</script>
+</head>
+<body>
+<form name="f">
+<input type="text" name="name" />
+<input type="button" value="입력" onclick="helloToServer()" />
+</form>
+</body>
+</html>
+
+[hello.jsp]
+<%@ page contentType="text/plain; charset=euc-kr" %>
+<%
+	request.setCharacterEncoding("utf-8");
+	String name = request.getParameter("name");
+%>
+안녕하세요, <%= name %> 회원님!
+
+===============================================================
+
+ : innerHTML 속성을 사용한 화면 변경
+   개체의 시작 태그와 종료 태그 사이에 있는 html을 나타내는 속성으로 block element에만 적용되며 
+   시작 태그와 종료 태그 모두를 포함하지 않는 요소는 innerHTML속성을 가질 수 없으며 
+   text와 element를 포함한 유효한 string이어야 한다.
+
+ : innerHTML 속성을 사용하는 기본 코드
+[viewinnerHTML.html]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=euc-kr" />
+	<title>innerHTML 내용 출력</title>
+	<script type="text/javascript">
+	function view() {
+		var p1 = document.getElementById("p1");
+		alert(p1.innerHTML);
+	}
+	</script>
+</head>
+<body>
+<p id="p1"><strong>Ajax</strong> 프로그래밍,<br/>기초</p>
+<input type="button" value="보기" onclick="view()"/>
+</body>
+</html>
+
+ : 1초마다 현재 시간을 출력해주는 예
+[clock.html]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=euc-kr" />
+	<title>시계</title>
+	<script type="text/javascript">
+	function printTime() {
+		var clock = document.getElementById("clock");
+		var now = new Date();
+		clock.innerHTML = 
+			now.getFullYear() + "년 "+
+			(now.getMonth()+1) + "월 "+
+			now.getDate() +"일 "+
+			now.getHours() +"시 "+
+			now.getMinutes() +"분 "+
+			now.getSeconds() +"초";
+		setTimeout("printTime()", 1000);
+	}
+	window.onload = function() {
+		printTime();
+	}
+	</script>
+</head>
+<body>
+현재 시간은 <span id="clock"></span> 입니다.
+</body>
+</html>
+
+ : 응답 텍스트로 생성한 HTML 코드를 그대로 반영하기
+[getNewsTitles.jsp]
+<%@ page contentType = "text/plain; charset=euc-kr" %>
+<%
+	String[] titles = {
+		"서재응 완벽투구… 게레로 3구 삼진",
+		"리틀 감독 '서재응 12일부터 고정 선발'",
+		"박찬호 김선우 시범경기 등판 호투"
+	};
+	for (int i = 0 ; i < titles.length ; i++) {
+%>
+<% if (i == 0) { %><strong><% } %>
+<%= titles[i] %>
+<% if (i == 0) { %></strong><% } %>
+<br/>
+<%
+	}
+%>
+
+[news.html]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=euc-kr" />
+	<title>뉴스</title>
+	<script type="text/javascript" src="httpRequest.js"></script>
+	<script type="text/javascript">
+	function loadNews() {
+		sendRequest("getNewsTitles.jsp", null, loadedNews, "GET");
+	}
+	function loadedNews() {
+		if (httpRequest.readyState == 4) {
+			if (httpRequest.status == 200) {
+				var newsList = document.getElementById("newsList");
+				newsList.innerHTML = httpRequest.responseText;
+			}
+		}
+	}
+	window.onload = function() {
+		loadNews();
+	}
+	</script>
+</head>
+<body>
+<div id="newsList"></div>
+</body>
+</html>
+
+ : Common Separated Value 양식의 응답 텍스트를 분석해서 화면에 출력하기
+[getMaxTemperature.jsp]
+<%@ page contentType = "text/plain; charset=euc-kr" %><%
+	double[] maxTemperature = {
+		10.2, 11.8, 12.9, 9.0
+	};
+	for (int i = 0 ; i < maxTemperature.length ; i++) {
+		out.print(maxTemperature[i]);
+		if (i < maxTemperature.length - 1) {
+			out.print(",");
+		}
+	}
+%>
+
+[maxTemperature.html]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=euc-kr" />
+	<title>최고기온</title>
+	<script type="text/javascript" src="httpRequest.js"></script>
+	<script type="text/javascript">
+	function loadList() {
+		sendRequest("getMaxTemperature.jsp", null, loadedList, "GET");
+	}
+	function loadedList() {
+		if (httpRequest.readyState == 4) {
+			if (httpRequest.status == 200) {
+				var csvStr = httpRequest.responseText;
+				// 콤마로 읽어온 값을 분리
+				var temperatureStrs = csvStr.split(",");
+				var temperatures = new Array(temperatureStrs.length);
+				for (var i = 0 ; i < temperatureStrs.length ; i++) {
+					temperatures[i] = parseFloat(temperatureStrs[i]);
+				}
+				var max = temperatures[0];
+				for (var i = 1 ; i < temperatures.length ; i++) {
+					if (max < temperatures[i]) {
+						max = temperatures[i];
+					}
+				}
+				var maxtemp = document.getElementById("maxtemp");
+				maxtemp.innerHTML = "<strong>"+max+"</strong>";
+			} else {
+				alert(httpRequest.status);
+			}
+		}
+	}
+	window.onload = function() {
+		loadList();
+	}
+	</script>
+</head>
+<body>
+최근 4일간 최고기온: <span id="maxtemp"></span>
+</body>
+</html>
+
+ : 자바스크립트 디버깅 콘솔 만들기
+[log.js]
+function log(msg) {
+	var console = document.getElementById("debugConsole");
+	if (console != null) {
+		console.innerHTML += msg +"<br/>";
+	}
+}
+
+[logtest.html]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=euc-kr" />
+	<title>log 테스트</title>
+	<script type="text/javascript" src="log.js"></script>
+	<script type="text/javascript">
+	function loadList() {
+		log("loadList 시작");
+		// 알맞은 작업
+		log("loadList 종료");
+	}
+	window.onload = function() {
+		log("window.onload 호출");
+		loadList();
+	}
+	</script>
+</head>
+<body>
+<div id="debugConsole" style="border: 1px solid #000"></div>
+</body>
+</html>
+
+ : javascript:alert(document.documentElement.innerHTML)
+
+ : 제시어 기능 구현하기
+ : 서버측 제시어 기능 구현
+
+[suggest.jsp]
+<%@ page contentType = "text/plain; charset=euc-kr" %>
+<%@ page import = "java.util.List" %>
+<%!
+	String[] keywords = {
+		"AJAX",
+		"AJAX 실전 프로그래밍",
+		"자라",
+		"자바 프로그래밍",
+		"자바 서버 페이지",
+		"자바스터디",
+		"자바서비스",
+		"자바캔"
+	};
+	
+	public List search(String keyword) {
+		if (keyword == null || keyword.equals("")) 
+			return java.util.Collections.EMPTY_LIST;
+		keyword = keyword.toUpperCase();
+		List result = new java.util.ArrayList(8);
+		for ( int i = 0 ; i < keywords.length ; i++ ) {
+			if (((String)keywords[i]).startsWith(keyword)) {
+				result.add(keywords[i]);
+			}
+		}
+		return result;
+	}
+%>
+<%
+	request.setCharacterEncoding("utf-8");
+	String keyword = request.getParameter("keyword");
+	List keywordList = search(keyword);
+	out.print(keywordList.size());
+	out.print("|");
+	for (int i = 0 ; i < keywordList.size() ; i++) {
+		String key = (String)keywordList.get(i);
+		out.print(key);
+		if (i < keywordList.size() - 1) {
+			out.print(",");
+		}
+	}
+%>
+
+[suggestclient.html]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=euc-kr" />
+	<title>서제스트</title>
+	<script type="text/javascript" src="httpRequest.js"></script>
+	<script type="text/javascript">
+	var checkFirst = false;
+	var lastKeyword = '';
+	var loopSendKeyword = false;
+	
+	function startSuggest() {
+		if (checkFirst == false) {
+			setTimeout("sendKeyword();", 500);
+			loopSendKeyword = true;
+		}
+		checkFirst = true;
+	}
+	function sendKeyword() {
+		if (loopSendKeyword == false) return;
+		
+		var keyword = document.search.keyword.value;
+		if (keyword == '') {
+			lastKeyword = '';
+			hide('suggest');
+		} else if (keyword != lastKeyword) {
+			lastKeyword = keyword;
+			
+			if (keyword != '') {
+				var params = "keyword="+encodeURIComponent(keyword);
+				sendRequest("suggest.jsp", params, displayResult, 'POST');
+			} else {
+				hide('suggest');
+			}
+		}
+		setTimeout("sendKeyword();", 500);
+	}
+	function displayResult() {
+		if (httpRequest.readyState == 4) {
+			if (httpRequest.status == 200) {
+				var resultText = httpRequest.responseText;
+				var result = resultText.split('|');
+				var count = parseInt(result[0]);
+				var keywordList = null;
+				if (count > 0) {
+					keywordList = result[1].split(',');
+					var html = '';
+					for (var i = 0 ; i < keywordList.length ; i++) {
+						html += "<a href=\"javascript:select('"+
+						        keywordList[i]+"')\">"+
+						        keywordList[i]+"</a><br/>";
+					}
+					var listView = document.getElementById('suggestList');
+					listView.innerHTML = html;
+					
+					show('suggest');
+				} else {
+					hide('suggest');
+				}
+			} else {
+				alert("에러 발생: "+httpRequest.status);
+			}
+		}
+	}
+	function select(selectedKeyword) {
+		document.search.keyword.value = selectedKeyword;
+		loopSendKeyword = false;
+		checkFirst = false;
+		hide('suggest');
+	}
+	function show(elementId) {
+		var element = document.getElementById(elementId);
+		if (element) {
+			element.style.display = '';
+		}
+	}
+	function hide(elementId) {
+		var element = document.getElementById(elementId);
+		if (element) {
+			element.style.display = 'none';
+		}
+	}
+	</script>
+	<style>
+	#view {
+		border: 1px solid #999;
+	}
+	</style>
+</head>
+<body>
+<form name="search">
+<input type="text" name="keyword" id="keyword" onkeydown="startSuggest()" />
+<input type="button" value="검색" />
+<div id="suggest" style="display:; postion: absolute; left: 0px; top: 30px;">
+	<div id="suggestList"></div>
+</div>
+
+</form>
+
+</body>
+</html>
+
+

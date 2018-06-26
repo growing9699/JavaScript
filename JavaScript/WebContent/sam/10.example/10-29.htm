@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        window.onload = function () {//함수의 이름이 없어서 익명함수라 연결하자마자 제거
+            var header = document.getElementById('myHeader');
+            var handler = function () { alert('클릭'); };
+            header.attachEvent('onclick', handler);
+            header.detachEvent('onclick', handler);
+        };
+    </script>
+</head>
+<body>
+    <h1 id="myHeader">Click</h1>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+	<ul>
+	    <li class="marked">html</li>
+	    <li>css</li>
+	    <li id="active">JavaScript
+	        <ul>
+	            <li>JavaScript Core</li>
+	            <li class="marked">DOM</li>
+	            <li class="marked">BOM</li>
+	        </ul>
+	    </li>
+	</ul>
+	
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	
+	<script>
+	
+	//$( ".marked", "#active").css( "background-color", "red" );//1
+	 
+	//$( "#active .marked").css( "background-color", "red" );//2
+	
+	//$( "#active").find('.marked').css( "background-color", "red" );//3 //1,2,3은 같은결과
+	
+	$('#active').css('color','blue').find('.marked').css( "background-color", "red" );
+	
+	</script>
+</body>
+</html>

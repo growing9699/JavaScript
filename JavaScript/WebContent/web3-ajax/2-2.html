@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <body>
+    <article id="aa">
+ 
+    </article>
+    
+    <input type="button" value="fetch" onclick="
+      fetch('3.html').then(function(response){
+        response.text().then(function(text){
+          document.querySelector('#aa').innerHTML = text;//3.html의 내용을 text에 담아서 출력
+          //querySelector('aa')aa id값을 가지는 태그의 객체를 선택
+        })
+      });
+    ">
+  </body>
+</html>

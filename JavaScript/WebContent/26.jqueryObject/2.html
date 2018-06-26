@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<ul>
+    <li id="target">html</li>
+    <li>css</li>
+    <li>JavaScript</li>
+</ul>
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<script>
+
+	var li = $('li');
+    for(var i=0; i<li.length; i++){
+        console.log(li[i].constructor);
+        console.log($(li[i]).css('color','red'));
+    }
+    var t = document.getElementById('target');
+    var li2 = $(t);
+    li2.css('color','blue');
+
+</script>
+
+</body>
+</html>
