@@ -11,7 +11,6 @@
 <script>
 
 	alert("hello");
-	alert("hello");
 	
 </script>
 
