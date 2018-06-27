@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<script type="text/javascript">
+<script type="text/javascript">//
 
 	alert(1);//정수 출력-2 -1 0 1 2 3 4
 	alert(1.1);//실수 출력
