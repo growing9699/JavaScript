@@ -10,7 +10,7 @@
 <script>
 
 console.log("hello22");
-console.log('hello3');//크롬에서 콘솔창에 보임 f12
+console.log('hello3');//크롬에서 콘솔창에 보임 f12//
 
 </script>
 </body>
