@@ -1,8 +1,16 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <input type="button" onclick="alert('Hello world')" 
-    value="action" />
-    <!-- onclick은 html의 속성인데 ,버튼을 클릭했을때 속성의 값으로 들어가있는 자바스크립트 실행한다 -->
+    <input type="button" onclick="alert('Hello world')" value="action" />
+    <!-- onclick은 html의 속성인데 ,버튼을 클릭했을때 속성의 값으로 들어가있는 자바스크립트 실행한다 
+    	브라우저에의해서 자바스크립트가 실행됨 이런걸 이벤트라고함
+    	onclick=""은 html이고 alert('Hello world')은 자스임
+    	이것의 장점은 같은 코드안이라 버튼을 눌렀을때 어떤것들 제어할것인가에대한것이 명확히 보임
+    	하지만 단점은 html코드안에 자스가있는거..정보와 제어가 같이짬뽕 그러면 유지보수가 쉽지않음
+    	이문제를 해결하는게 스크립트 태그임
+    	inline 방식은 태그에 직접 자바스크립트를 기술하는 방식이다. 
+    	장점은 태그에 연관된 스크립트가 분명하게 드러난다는 점이다. 
+    	하지만 정보와 제어가 섞여 있기 때문에 정보로서의 가치가 떨어진다.
+    	-->
 </body>
 </html>

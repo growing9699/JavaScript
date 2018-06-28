@@ -4,12 +4,14 @@
     <input type="button" id="hw" value="실행버튼" />
     <!--두번재방법은 html코드안에 자바스크립트가 존재안하게끔만듬 -->
     
-  <script type="text/javascript">
+  <script type="text/javascript"> /* 이 태그는 html이고 밑에부터 자스임 */
       var hw = document.getElementById('hw');//id가 hw인 태그(element)
       hw.addEventListener('click', function(){//그 태그를 가져와서 클릭했을때 함수실행
           alert('Hello world');
       })
   </script>
-    
+    <!-- <script></script> 태그를 만들어서 여기에 자바스크립트 코드를 삽입하는 방식이다. 
+    장점은 html 태그와 js 코드를 분리할 수 있다는 점이다. 
+     -->
 </body>
 </html>
