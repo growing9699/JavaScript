@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://code.jquery.com/jquery-1.7.js"></script>
+    <script>
+        $(document).ready(function () {
+            // 5초 후에 코드를 실행합니다.
+            setTimeout(function () {
+                // 변수를 선언합니다.
+                var value = $('select > option:selected').val();//셀렉트 태그에 자식은 옵션태그들인데 그중에 선택한거에 값을 가지고와라
+                // 출력합니다.
+                alert(value);//값을띄어라 
+            }, 5000);
+        });
+    </script>
+</head>
+<body>
+    <select>
+        <option>Apple</option>
+        <option>Bag</option>
+        <option>Cat</option>
+        <option>Dog</option>
+        <option>Elephant</option>
+    </select>
+</body>
+</html>

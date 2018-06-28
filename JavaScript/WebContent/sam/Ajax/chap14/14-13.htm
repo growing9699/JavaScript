@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://code.jquery.com/jquery-1.7.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('h1').each(function () {
+                if ($(this).is('.select')) {//h1객체를 지칭하는 this h1은 3개니까 차례대로 반복 그리고 클래스가 select인것만 찾아서
+                    $(this).css('background', 'Orange');
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1 class="select">Header-0</h1>
+    <h1>Header-1</h1>
+    <h1 class="select">Header-2</h1>
+</body>
+</html>

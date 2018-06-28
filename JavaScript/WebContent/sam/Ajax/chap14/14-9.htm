@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://code.jquery.com/jquery-1.7.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('h1').eq(0).css('background', 'Orange');//0이들어가면 첫번째
+            $('h1').eq(-1).css('background', 'Red');//-1은 맨끝에
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <h1>Header-0</h1>
+        <h1>Header-1</h1>
+        <h1>Header-2</h1>
+    </div>
+</body>
+</html>

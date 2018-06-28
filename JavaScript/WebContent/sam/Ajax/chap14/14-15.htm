@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://code.jquery.com/jquery-1.7.js"></script>
+    <script>
+        // 변수를 선언합니다.
+        var xml = '';//누군가 xml전송했다고 치고 xml에서 데이터를 쏙쏙 빼오는것
+        xml += '<friends>';
+        xml += '    <friend>';
+        xml += '        <name>연하진</name>';
+        xml += '        <language>Ruby</language>';
+        xml += '    </friend>';
+        xml += '    <friend>';
+        xml += '        <name>윤명월</name>';
+        xml += '        <language>Basic</language>';
+        xml += '    </friend>';
+        xml += '    <friend>';
+        xml += '        <name>윤하린</name>';
+        xml += '        <language>C#</language>';
+        xml += '    </friend>';
+        xml += '</friends>';
+
+        $(document).ready(function () {
+            // 변수를 선언합니다.
+            var xmlDoc = $.parseXML(xml);//parseXML이라는 함수//네트워크타고넘어온걸 받아주는것
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

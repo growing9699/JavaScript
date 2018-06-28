@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://code.jquery.com/jquery-1.7.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('h3').filter(':even').css({//h3전부다 해놓고 그중에서 필터링해서 짝수번째만//앞에것이 더쉬움
+                backgroundColor: 'Black',
+                color: 'White'
+            });
+        });
+    </script>
+</head>
+<body>
+    <h3>Header-0</h3>
+    <h3>Header-1</h3>
+    <h3>Header-2</h3>
+    <h3>Header-3</h3>
+    <h3>Header-4</h3>
+    <h3>Header-5</h3>
+</body>
+</html>
