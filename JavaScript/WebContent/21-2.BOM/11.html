@@ -4,43 +4,39 @@
 <body>
 <ul>
     <li>
-        첫번째 인자는 새 창에 로드할 문서의 URL이다. 인자를 생략하면 이름이 붙지 않은 새 창이 만들어진다.<br />
         <input type="button" onclick="open1()" value="window.open('1.html');" />
     </li>
     <li>
-        두번째 인자는 새 창의 이름이다. _self는 스크립트가 실행되는 창을 의미한다.<br />
         <input type="button" onclick="open2()" value="window.open('1.html', '_self');" />
+         <a href="/JavaScript/21-2.BOM/1.html">open('1.html', '_self')</a>
     </li>
     <li>
-        _blank는 새 창을 의미한다. <br />
         <input type="button" onclick="open3()" value="window.open('1.html', '_blank');" />
         <a href="1.html" target="_blank">1.html</a>
     </li>
     <li>
-        창에 이름을 붙일 수 있다. open을 재실행 했을 때 동일한 이름의 창이 있다면 그곳으로 문서가 로드된다.<br />
         <input type="button" onclick="open4()" value="window.open('1.html', 'ot');" />
     </li>
     <li>
-        세번재 인자는 새 창의 모양과 관련된 속성이 온다.<br />
         <input type="button" onclick="open5()" value="window.open('1.html', '_blank', 'width=200, height=200, resizable=yes');" />
     </li>
 </ul>
  
 <script>
 function open1(){
-    window.open('1.html');
+    window.open('1.html');//새창
 }
 function open2(){
-    window.open('1.html', '_self');
+    window.open('1.html', '_self');//자기자신의 탭
 }
 function open3(){
-    window.open('1.html', '_blank');
+    window.open('1.html', '_blank');//새창
 }
 function open4(){
-    window.open('1.html', 'ot');
+    window.open('1.html', 'ot');//한번 새창이 열리고 그곳에서만 계속열림
 }
-function open5(){
-    window.open('1.html', '_blank', 'width=200, height=200, resizable=yes');//resizable=no는 먹지를 않는다 보안상..
+function open5(){//새창이열림
+    window.open('1.html', '_blank', 'width=200, height=200, resizable=yes');//resizable=no는 먹지를 않는다 보안상..no로하면 크기를 조정못하는건데 원래
 }
 </script>
 </body>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<img src="/JavaScript/21-1.Object/windowObject.png">
+	<!-- style ="width:50px;" -->
+<script type= "text/javascript">
+   var imgs  = document.getElementsByTagName('img');
+		alert(imgs);//이건 배열이고 [<img src="/JavaScript/21-1.Object/windowObject.png">]
+		window.alert(imgs[0]);//<img src="/JavaScript/21-1.Object/windowObject.png"> 이 객체이고
+		//이러한 객체를 통한 제어를 하는게 자스이다
+		//그리고 window도 윈도우창 객체임 윈도우가 가지고있는 메소드 alert
+</script>
+	 <input type = "button" value="크기변환" onclick = "imgs[0].style.width='300px';"/>
+</body>
+</html>
