@@ -12,8 +12,9 @@
     <li>JavaScript</li>
 </ol>
 <script>
-    var ul = document.getElementsByTagName('ul')[0];
-    var lis = ul.getElementsByTagName('li');
+    var ul = document.getElementsByTagName('ul')[0];//배열의 첫번째인덱스
+    //여기서는 ul태그가 하나밖에없음
+    var lis = ul.getElementsByTagName('li');//ul의 li 하위태그만
     for(var i=0; lis.length; i++){
         lis[i].style.color='red';   
     }

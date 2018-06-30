@@ -14,7 +14,7 @@
  
 <script>
     var lis = document.querySelectorAll('li');//유사배열 리턴
-    for(var name in lis){//for(var i=0)이거써도 상관없음
+    for(var name in lis){//for(var i=0; i < lis.length; i++){이거써도 상관없음
         lis[name].style.color = 'blue';
     }
 </script>
