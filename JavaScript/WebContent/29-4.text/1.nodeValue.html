@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+<ul>
+    <li id="target">html</li> 
+    <li>css</li>
+    <li>JavaScript</li>
+</ul>
+<script>
+    var t = document.getElementById('target').firstChild;//html임
+    console.log(t.nodeValue);
+    console.log(t.data);
+    t.nodeValue = "nodeValue";//값을바꿈
+    console.log(t.nodeValue);
+    
+</script>
+
+</body>
+</html>
