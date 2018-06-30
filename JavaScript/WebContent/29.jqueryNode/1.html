@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div class="target">
+    content1
+</div>
+ 
+<div class="target">
+    content2
+</div>
+ 
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $('.target').before('<div>before</div>');
+    $('.target').prepend('<div>prepend</div>');
+    $('.target').append('<div>append</div>');
+    $('.target').after('<div>after</div>');
+</script>
+
+</body>
+</html>
