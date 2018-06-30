@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-
+여기의 핵심은 전부 적용이 아니라 하나하나식만 적용 도할수있다는걸 보여줌
 <ul>
     <li id="target">html</li>
     <li>css</li>
@@ -11,15 +11,19 @@
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
 <script>
+	
+	var t = document.getElementById('target');//이거는 돔객체인데!
+	var li2 = $(t);//돔객체를 제이커리 함수안에 전달하면 제이커리 객체가됨!
+	li2.css('color','blue');
 
 	var li = $('li');
     for(var i=0; i<li.length; i++){
-        console.log(li[i].constructor);
-        console.log($(li[i]).css('color','red'));
+        console.log(li[i]);
+        console.log(li[i].constructor);//이거는 제이커리객체가 아니라 dom객체인것이다
+        //console.log((li[i]).css('color','red'));//그래서 이거는 실행이안됨 제이커리 객체가 아니라서..
+        console.log($(li[i]).css('color','red'));//이거는 돔객체를 제이커리 함수안에 집어넣어서 제이커리객체라 실행됨
+        //여기의 핵심은 전부 적용이 아니라 하나하나식만 적용 도할수있다는걸 보여줌
     }
-    var t = document.getElementById('target');
-    var li2 = $(t);
-    li2.css('color','blue');
 
 </script>
 
