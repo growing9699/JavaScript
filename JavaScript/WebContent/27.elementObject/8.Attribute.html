@@ -3,17 +3,15 @@
 <body>
 
 	<a id="target" href="./demo1.html">ot</a>
-	<script>//값을 가져오는 차이점을 보여주는데
 	
-	//현재 웹페이지가 
-	//http://localhost/webjs/Element/attribute_api/demo3.html 일 때 
+	<script>//값을 가져오는 차이점을 보여주는데
 	
 	var target = document.getElementById('target'); 
 	
-	console.log('target.href', target.href);
+	console.log(target.href);//상대경로가 적혀져있어도 전체경로 리턴
 	// http://localhost/webjs/Element/attribute_api/demo1.html
 	 
-	console.log('target.getAttribute("href")', target.getAttribute("href"));
+	console.log(target.getAttribute("href"));
 	// ./demo1.html
 	
 	//이렇게 가져오는 값이다르다

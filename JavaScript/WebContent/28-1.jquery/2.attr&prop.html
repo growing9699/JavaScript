@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<a id="t1" href="./demo.html">opentutorials</a>
+<input id="t2" type="checkbox" checked="checked" />
+ <!-- checked="checked" 이게 있으면 체크가 되어있는 상태 없으면 체크가 없는상태로 보임 -->
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<script>
+var t1 = $('#t1');
+console.log(t1.attr('href')); // ./demo.html // 상대경로 리턴 
+console.log(t1.prop('href')); // http://localhost/jQuery_attribute_api/demo.html 
+//전체경로 리턴
+ 
+var t2 = $('#t2');
+console.log(t2.attr('checked')); // checked or undefined//로리턴
+console.log(t2.prop('checked')); // true or false로 리턴
+</script>
+<!-- attr은 attribute방식
+	prop는 property방식 -->
+</body>
+</html>

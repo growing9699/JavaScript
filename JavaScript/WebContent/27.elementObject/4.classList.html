@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
 <body>
-
 <ul>
     <li>html</li>
     <li>css</li>
     <li id="active" class="important current">JavaScript</li>
+    						<!-- 이거는 클래스가 2개인거다! -->
 </ul>
 <script>
 function loop(){
-    for(var i=0; i<active.classList.length; i++){//active.classList(유사배열)는 현재 2개임(important current)
+    for(var i=0; i < active.classList.length; i++){
+    	//active.classList(유사배열)는 현재 2개임(important current)
         console.log(i, active.classList[i]);
     }
 }
@@ -20,7 +21,7 @@ function loop(){
 <input type="button" value="추가" onclick="active.classList.add('marked');" />
 <input type="button" value="제거" onclick="active.classList.remove('important');" />
 <input type="button" value="토글" onclick="active.classList.toggle('current');" />
-토글은 제거도하고 다시 생성도 하고 반복함
+<!-- 토글은 제거도하고 다시 생성도 하고 반복함  on/off-->
 
 </body>
 </html>
