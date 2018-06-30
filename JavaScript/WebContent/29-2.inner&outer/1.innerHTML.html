@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<ul id="target">
+    <li>HTML</li>
+    <li>CSS</li>
+</ul>
+<input type="button" onclick="get();" value="get" />
+<input type="button" onclick="set();" value="set" />
+<script>
+    function get(){
+        var target = document.getElementById('target');//값만 출력
+        alert(target.innerHTML);
+    }
+    function set(){
+        var target = document.getElementById('target');//안을 변경해버림
+        target.innerHTML = "<li>JavaScript Core</li><li>BOM</li><li>DOM</li>";
+    }
+</script>
+</body>
+</html>
