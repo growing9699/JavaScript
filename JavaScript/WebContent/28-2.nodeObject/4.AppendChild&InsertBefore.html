@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<ul id="target">
+    <li>HTML</li>
+    <li>CSS</li>
+    <!-- <li>java</li>를 추가할것 -->
+</ul>
+
+<input type="button" onclick="callAppendChild();" value="appendChild()" />
+<input type="button" onclick="callInsertBefore();" value="insertBefore()" />
+
+<script>
+    function callAppendChild(){
+        var target = document.getElementById('target');
+        var li = document.createElement('li');//li객체//doucment는 node로 부터 상속받았으니 문서에서 li태글를 만드는것
+        var text = document.createTextNode('JavaScript');//테스트 객체
+        li.appendChild(text);//li노드객체의 자식으로 위치시킬 노드인 객체 text를 넣어줌,text는 li의 자식이됨
+        target.appendChild(li);//제일끝에 추가가됨 appned는 덧붙이는거
+    }
+ 
+    function callInsertBefore(){//중간에끼워넣기 위해
+        var target = document.getElementById('target');
+        var li = document.createElement('li');
+        var text = document.createTextNode('jQuery');
+        li.appendChild(text);
+        target.insertBefore(li, target.firstChild);//firstChild 이전에 추가한다는거 
+    }
+</script>
+
+</body>
+</html>

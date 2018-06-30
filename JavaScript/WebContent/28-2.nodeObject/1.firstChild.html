@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<body id="start">
+<ul> 
+    <li><a href="./532">html</a></li> 
+    <li><a href="./533">css</a></li>
+    <li><a href="./534">JavaScript</a>
+        <ul>
+            <li><a href="./535">JavaScript Core</a></li>
+            <li><a href="./536">DOM</a></li>
+            <li><a href="./537">BOM</a></li>
+        </ul>
+    </li>
+</ul>
+<script>
+var s = document.getElementById('start');
+console.log(1, s.firstChild); // #text 
+//body태그와 ul태그사이에 공백문자,줄바꿈 문자와  관련된 데이터가존재한다면
+//명한 node에 해당됨(자식엘리먼트,자식노드존재)-줄바꿈 문자를 가리키는 객체임 그게 text객체!
+var ul = s.firstChild.nextSibling//시블링은 형제자매라는뜻 같은레벨의 엘리먼트
+console.log(2, ul); // ul
+console.log(3, ul.nextSibling); // #text//또다른 공백문자,줄바꿈문자
+console.log(4, ul.nextSibling.nextSibling); // script // 그리고 다시 같은레벨의것을 찾음
+console.log(5, ul.nextSibling.nextSibling.previousSibling); // #text //이전형제
+console.log(6, ul.nextSibling.nextSibling.previousSibling.previousSibling); // ul //이전 이전 형제
+ul.nextSibling.nextSibling.previousSibling.previousSibling.style.color = 'green';
+console.log(7, ul.nextSibling.nextSibling.previousSibling.previousSibling.firstChild); // #text 
+console.log(8, ul.nextSibling.nextSibling.previousSibling.previousSibling.firstChild.nextSibling);// li 
+console.log(9, ul.nextSibling.nextSibling.previousSibling.previousSibling.firstChild.nextSibling.parentNode);// ul //부모엘리먼트
+console.log(10, ul.nextSibling.nextSibling.previousSibling.previousSibling.firstChild.nextSibling.parentNode.parentNode);//<body id="start">
+//#text는 경우에따라 자식이 되기도하고. 형제가되기도함 
+console.log(start.childNodes);//body 자식들을 다꺼냄 text도 포함 //유사배열임
+
+console.log(start.childNodes.length);//5
+console.log(start.childNodes[0]);
+console.log(start.childNodes[1]);
+console.log(start.childNodes[2]);
+console.log(start.childNodes[3]);
+console.log(start.childNodes[4]);
+
+
+console.log(11, ul.childNodes); //text, li, text, li, text, li, text
+console.log(12, ul.childNodes[1]); // li(html)
+console.log(13, ul.parentNode); // body
+</script>
+</body>
+
+</body>
+</html>
