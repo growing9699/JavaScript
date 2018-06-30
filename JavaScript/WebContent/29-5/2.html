@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<style>
+    body{
+        padding:0;
+        margin:0;
+    }
+    div{
+        border:50px solid #1065e6;
+        padding:50px;
+        margin:50px;
+    }
+    #target{
+        width:100px;
+        height:100px;
+    }
+</style>
+<div>
+    <div id="target">
+        Coding
+    </div>
+</div>
+<script>
+var t = document.getElementById('target');
+console.log(t.getBoundingClientRect());
+console.log(t.offsetParent);//페런트는 바디다 바디를 기준으로 측정한거 근데이값은 바디가 아니라 테이블을쓰면 테이블이 기준이되기도함
+//만약 부모 중 CSS position의 값이 static인 td, th, table 엘리먼트가 있다면 이 엘리먼트가 offsetParent가 된다
+
+console.log('clientWidth:', t.clientWidth, 'clientHeight:', t.clientHeight);
+//테두리를 제외한 엘리먼트의 크기를 알고 싶다면  ClientWidth, ClientHeight를 사용한다. 
+</script>
+</body>
+</html>
