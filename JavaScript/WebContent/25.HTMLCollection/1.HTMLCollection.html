@@ -8,17 +8,17 @@
 	</ul>
 	
 	<script>
-	console.group('before');//시각적으로 콜솔을 비포와 에프터로 나눠준다
-	var lis = document.getElementsByTagName('li');
+	console.group('before');//시각적으로 콜솔을 그룹핑해서 비포와 에프터로 나눠준다
+	var lis = document.getElementsByTagName('li');//HTMLCollection객체임
 	for(var i = 0; i < lis.length; i++){
 	    console.log(lis[i]);
 	}
 	console.groupEnd();
 	
-	console.group('after');
+	console.group('after');//시각적으로 콜솔을 그룹핑해서 비포와 에프터로 나눠준다
 	lis[1].parentNode.removeChild(lis[1]);//lis[1]은   <li>CSS</li> 이다
 	//그 엘리먼트를 삭제
-	for(var i = 0; i < lis.length; i++){
+	for(var i = 0; i < lis.length; i++){//삭제가 바로반영되는 HTMLCollection의 특성
 	    console.log(lis[i]);
 	}
 	console.groupEnd();
