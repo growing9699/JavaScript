@@ -14,7 +14,7 @@
 <script>
     var target = document.getElementById('list');
     console.log(target.constructor.name);// HTMLLIElement
-	target.type = "square";
+	target.type = "square";//li객체에는 type속성이있음 그걸 square로바꿈
     
     var target = document.getElementById('anchor');
     console.log(target.constructor.name);//HTMLAnchorElement
@@ -22,7 +22,8 @@
     
     var target = document.getElementById('button');
     console.log(target.constructor.name);//HTMLInputElement
- 
+
+	//이렇게 객체가 다르면 각각의 프로퍼티 기능이 다르다!    
 </script> 
 
 </body>

@@ -1,3 +1,9 @@
+	https://opentutorials.org/course/1375/6665
+	https://www.w3.org/TR/2003/REC-DOM-Level-2-HTML-20030109/html.html#ID-74680021
+	https://www.w3.org/TR/DOM-Level-2-HTML/html.html#ID-48250443
+	https://www.w3.org/TR/DOM-Level-2-HTML/html.html#ID-6043025
+	
+	
 	HTMLElement는 아래와 같다.
 	
 	interface HTMLElement : Element {
@@ -11,14 +17,14 @@
 	
 	HTMLLIElement를 보자.
 	
-	interface HTMLLIElement : HTMLElement {//상속
+	interface HTMLLIElement : HTMLElement {//HTMLElement를 상속
 	           attribute DOMString       type;
 	           attribute long            value;
 	};
 	
 	다음은 HTMLAnchroElement이다.
 	
-	interface HTMLAnchorElement : HTMLElement {//상속
+	interface HTMLAnchorElement : HTMLElement {//HTMLElement를 상속
 	           attribute DOMString       accessKey;
 	           attribute DOMString       charset;
 	           attribute DOMString       coords;
@@ -38,9 +44,4 @@
 	
 	즉 엘리먼트 객체에 따라서 프로퍼티가 다르다는 것을 알 수 있다. 
 	하지만 모든 엘리먼트들은 HTMLElement를 상속 받고 있다. 
-	
-	https://www.w3.org/TR/2003/REC-DOM-Level-2-HTML-20030109/html.html#ID-74680021
-	https://www.w3.org/TR/DOM-Level-2-HTML/html.html#ID-48250443
-	https://www.w3.org/TR/DOM-Level-2-HTML/html.html#ID-6043025
-	
 	
