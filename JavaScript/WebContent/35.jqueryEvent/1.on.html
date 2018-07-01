@@ -2,19 +2,19 @@
 <input type="button" id="jquery" value="jQuery" />
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>
-    // 순수하게 구현했을 때
+    // 자스로 순수하게 구현했을 때
     var target = document.getElementById('pure');
     if(target.addEventListener){
         target.addEventListener('click', function(event){
             alert('pure');
         });
-    } else {
+    } else {//익스플로어용
         target.attachEvent('onclick', function(event){
             alert('pure');
         });
     }
  
-    // jQuery를 사용했을 때
+    // jQuery를 사용했을 때 그냥 on으로 크롬이나 익스플로어 통용함
     $('#jquery').on('click', function(event){
         alert('jQuery');
     })

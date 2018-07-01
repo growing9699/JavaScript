@@ -99,6 +99,7 @@
         </table>
         <script>
         var t = document.getElementById('target');
+        
         function handler(event){
             var info = document.getElementById('elm'+event.type);
             var time = new Date();
@@ -116,6 +117,7 @@
             document.getElementById('elemclientx').innerHTML = event.clientX;
             document.getElementById('elemclienty').innerHTML = event.clientY;
         }
+        
         t.addEventListener('click', handler);
         t.addEventListener('dblclick', handler);
         t.addEventListener('mousedown', handler);
@@ -124,6 +126,7 @@
         t.addEventListener('mouseover', handler);
         t.addEventListener('mouseout', handler);
         t.addEventListener('contextmenu', handler);
+        
         </script>
     </body>
 </html>
