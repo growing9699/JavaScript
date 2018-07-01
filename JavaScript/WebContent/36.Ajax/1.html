@@ -5,13 +5,17 @@
 <script>
 document.querySelector('input').addEventListener('click', function(event){
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', './time.php');
+    //XMLHttpRequest은 ajax통신을 하기 위해서 사용해야하는 객체
+    xhr.open('GET', './time.php');//서버와 통신할때 겟방식으로한다
+   /* <form method="GET" action="">과 같음 */
     xhr.onreadystatechange = function(){
+	   //상태의변화가있을때,과정의 단계마다 onreadystatechange 이벤트 핸들러 호출
         if(xhr.readyState === 4 && xhr.status === 200){
-            document.querySelector('#time').innerHTML = xhr.responseText;
+  //통신의 현재 상태readyState 4라는 것은 모든 통신이끝났다는거, 그리고 200은 통신에 성공한것 
+  document.querySelector('#time').innerHTML = xhr.responseText;//서버에서 리턴해준 가져온정보를 넣는다
         }
     }
-    xhr.send(); 
+    xhr.send(); //이게 호출될때 //xhr.open('GET', './time.php');이것이 시작됨 통신이 시작
 }); 
 </script>
 </body>
