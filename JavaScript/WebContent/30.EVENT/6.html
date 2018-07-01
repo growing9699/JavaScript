@@ -6,9 +6,10 @@
 <script>
 
     var t = document.getElementById('target');
+    //가장권장되는 방식
     
     t.addEventListener('click', function(event){//첫번재인자로 이벤트타입받음
-    	//클릭이 발생했을때 두번째인자가 호출
+    	//클릭이 발생했을때 두번째인자가 호출//event인자안에 여러 프로퍼티가있고 그중 target이있음
         alert('Hello world, '+event.target.value);
     });
     

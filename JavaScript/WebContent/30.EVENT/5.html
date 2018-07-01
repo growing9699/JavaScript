@@ -7,10 +7,10 @@
     var t = document.getElementById('target');
     t.onclick = function(event){
         var event = event || window.event;//크롬 말고 다른버젼할때는 이렇게 해줌 윈도우 객체의 이벤트!
-        //앞에 event가 있으면 그대로 쓰고 없으면 윈도우객체의 event를 쓰겠다는것
+        //앞에 지역에 event가 있으면 그대로 쓰고 없으면 윈도우객체의 event를 쓰겠다는것
         console.dir(event);
         
-        var target = event.target || event.srcElement;
+        var target = event.target || event.srcElement;//타겟도 마찬가지
         alert('Hello world, '+target.value)
     }
 </script>

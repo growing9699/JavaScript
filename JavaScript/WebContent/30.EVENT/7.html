@@ -8,7 +8,7 @@
 <script>
 var t = document.getElementById('target');
 
-if(t.addEventListener){//이 메소드가있는지 없는지 체크
+if(t.addEventListener){//기능테스트 : 이 메소드가있는지 없는지 체크 // undifined는 false를 의미
     t.addEventListener('click', function(event){
         alert('Hello world, '+event.target.value);
     }); 
