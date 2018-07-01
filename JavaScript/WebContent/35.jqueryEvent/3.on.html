@@ -1,0 +1,17 @@
+<HTML>
+<body>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $('ul').on('click','a, li', function(event){
+        console.log(this.tagName);
+    })
+</script>
+<!-- 이렇게 밑에다가 ul을 두면 위 스크립트가 먼저실행하면서 아래내용을 못찾음 -->
+<ul>
+    <li><a href="#">HTML</a></li>
+    <li><a href="#">CSS</a></li>
+    <li><a href="#">JavaScript</a></li>
+</ul>
+
+</body>
+</HTML>

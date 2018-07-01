@@ -1,0 +1,16 @@
+<HTML>
+<body>
+
+<input type="text" id="target" />
+<p id="status"></p>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+	
+	var handler = function(e){
+		$('#status').html(e.type);
+	}
+    $('#target').on('focus', handler).on('blur', handler);
+  /* 체이닝 방식도 가능하다 */
+</script>
+</body>
+</HTML>

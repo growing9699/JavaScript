@@ -1,0 +1,25 @@
+<HTML>
+<body>
+
+<input type="text" id="target" />
+<input id="remove"  type="button" value="remove" />
+<p id="status"></p>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<script>
+  var handler = function(e){
+    $('#status').text(e.type+Math.random());
+  };
+  $('#target').on('focus blur', handler)//이것만삭제
+  $('#target').on('focus', function(e){
+	  console.log(1);
+  });
+  
+  $('#remove').on('click' , function(e){
+    $('#target').off('focus blur');//모두다 삭제
+  })
+  
+</script>
+
+</body>
+</HTML>

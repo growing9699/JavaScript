@@ -1,0 +1,12 @@
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<ul>
+    <li><a href="#">HTML</a></li>
+    <li><a href="#">CSS</a></li>
+    <li><a href="#">JavaScript</a></li>
+</ul>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $('ul').on('click','a, li', function(event){//'a, li',는 셀렉터 파라미터임
+        console.log(this.tagName);//a를 클릭하면 a태그와 li태그가 찍히고 //li만 클릭하면 li태그만찍힘
+    })// ul 엘리먼트의 하위 엘리먼트 중에  a, li 엘리먼트들에 대해서만 이벤트가 발생한다. 주의 할 것은 ul 엘리먼트는 이벤트가 발생하지 않는다는 점이다. 
+</script>

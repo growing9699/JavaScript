@@ -1,0 +1,16 @@
+<HTML>
+<body>
+
+<input type="text" id="target" />
+
+<p id="status"></p>
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $('#target').on('focus blur', function(e){//focus blur두가지 설정가능
+        $('#status').html(e.type);
+    })
+</script>
+
+</body>
+</HTML>
