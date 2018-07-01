@@ -1,0 +1,19 @@
+ <head>
+    <script>
+        window.addEventListener('DOMContentLoaded', function(){
+        	//DOMContentLoaded는 dom에해당하는 컨텐트가 모두 로드가 끝나면 그때 발생하는 이벤트
+            console.log('DOMContentLoaded');//다운로드할것들이나 이미지 제외하고 모든 html태그가 ready상태가되면
+            //함수실행되게끔(엘리먼트자체는 제외안함 왜냐하면 이것들을 제어하기위해서 )
+            var t = document.getElementById('target');
+            console.log(t);
+        })
+    </script>
+    </head>
+    <body>
+        <p id="target">Hello</p>
+          <img src="https://s3-ap-northeast-1.amazonaws.com/
+    opentutorialsfile/course/94.png"/>
+    </body>
+</html>
+
+</html>
