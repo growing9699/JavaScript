@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://code.jquery.com/jquery-1.7.js"></script>
+    <script>
+        $(document).ready(function () {//페이지가 로드가 되면
+            // 이벤트를 연결합니다.
+            $('h1').bind('click', function () {//클릭 이벤트가 발생되면
+                $(this).html(function (index, html) {
+                    return html + '+';
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Header-0</h1>
+    <h1>Header-1</h1>
+    <h1>Header-2</h1>
+</body>
+</html>
