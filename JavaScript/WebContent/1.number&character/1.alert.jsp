@@ -8,9 +8,9 @@
 </head>
 <body>
 <script>
-	alert("hello");/////
-	alert("he2");//
-	alert("he2");//
+	alert("h33");////3/
+	alert("h44");//1
+	alert("h55");//2
 	
 </script>
 
