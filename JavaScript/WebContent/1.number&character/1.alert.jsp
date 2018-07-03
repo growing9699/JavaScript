@@ -7,11 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 <script>
-
 	alert("hello");/////
-	alert("hello2");
+	alert("he2");//
+	alert("he2");//
 	
 </script>
 
