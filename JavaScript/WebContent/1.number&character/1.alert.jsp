@@ -8,9 +8,8 @@
 </head>
 <body>
 <script>
-	alert("hello");/////
-	alert("he2");//
-	alert("he2");//
+	alert("1");
+	alert("1");
 	
 </script>
 
