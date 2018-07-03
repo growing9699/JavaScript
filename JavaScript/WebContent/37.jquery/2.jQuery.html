@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        <script type="text/javascript">
+            $('#navigation li').live('click', function() {//live라는 이벤트 api
+            	//li엘리먼트에 클릭이 일어나면 함수실행
+                $('#navigation li').removeClass('selected');//li모두에서 selected클래스명을 제거
+                $(this).addClass('selected');//this는 클릭한거
+            })
+        </script>
+        <style type="text/css">
+            #navigation li {
+                list-style:none;
+                float:left;
+                padding:5px;
+            }
+            #navigation {
+                cursor:pointer;
+            }
+            #navigation .selected {
+                background-color:red;
+                color:white;
+            }
+        </style>
+    </head>
+    <body>
+        <ul id="navigation">
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>javascript</li>
+            <li class="selected">jQuery</li>
+            <li>PHP</li>
+            <li>mysql</li>
+        </ul>
+    </body>
+</html>

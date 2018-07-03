@@ -1,0 +1,15 @@
+<html>
+  <body>
+      <div class="welcome"></div>
+      <div class="welcome"></div>
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script type="text/javascript">
+	
+	(function($){//$를 함수의 지역변수로 선언해서 외부에 있을지 모르는 타 라이브러리의 $와의 충돌을 예방
+	    $('body').html('hello world');
+	})(jQuery)//(jQuery)이거는 jQuery를 function($)안 달라에 넣으면서 이 함수를 안전하게 지역변수를 써서
+	//바로 호출시키겠다는뜻
+	</script>
+
+  </body>
+ </html>

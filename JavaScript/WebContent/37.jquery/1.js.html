@@ -1,0 +1,61 @@
+<html>
+  <head>
+ 	<script type="text/javascript">
+     function addEvent(target, eventType,eventHandler, useCapture) {
+         if (target.addEventListener) { // W3C DOM의표준//윈도우객체에 addEventListener가 존재하느냐 안하느냐
+             target.addEventListener(eventType,eventHandler,useCapture?useCapture:false);
+         } else if (target.attachEvent) {  // IE DOM//익스플로어인지
+             var r = target.attachEvent("on"+eventType, eventHandler);
+         }
+     }
+     function clickHandler(event) {//event를 전달 이건 시스템이하는것
+         var nav = document.getElementById('navigation');
+         for(var i = 0; i < nav.childNodes.length; i++) {
+             var child = nav.childNodes[i];
+             if(child.nodeType==3)
+                 continue;
+             child.className = '';//클래스네임을 전부 초기화
+         }
+         event.target.className = 'selected';//하나만 클래스네임 selected로 설정
+     }
+     addEvent(window, 'load', function(eventObj) {//window객체 ,load이벤트를 발생했을때
+     	//웹페이지가 이미지등 다 다운로드가 끝났을때 이 이벤트가 실행 그리고 함수실행
+         var nav = document.getElementById('navigation');
+         for(var i = 0; i < nav.childNodes.length; i++) {
+             var child = nav.childNodes[i];
+             if(child.nodeType==3)//nodeType는 엘리먼트의 성격을 체크//3은 공백이라는뜻
+                 continue;//공백이면 스킵
+             addEvent(child, 'click', clickHandler);//다시호출
+         }
+     });
+        </script>
+        
+        <style type="text/css">
+            #navigation li {
+                list-style:none;
+                /* none은 앞에 점 없어지게함 */
+                float:left;
+                /* 왼쪽으로 일렬로만듬 */
+                padding:5px;
+            }
+            #navigation {
+                cursor:pointer;
+            }
+            #navigation .selected {
+            /* selected인 클래스를 선택 */
+                background-color:red;
+                color:white;
+            }
+        </style>
+    </head>
+    <body>
+        <ul id="navigation">
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>javascript</li>
+            <li class="selected">jQuery</li>
+            <li>PHP</li>
+            <li>mysql</li>
+        </ul>
+    </body>
+</html>

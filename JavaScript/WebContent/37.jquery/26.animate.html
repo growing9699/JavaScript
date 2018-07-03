@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>        
+            div {
+                background-color:#bca;
+                width:100px;
+                border:1px solid green;
+            }
+</style>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+    </head>
+    <body>
+        <button id="go">
+            &raquo; Run
+        </button>
+ 
+        <div id="block">
+            Hello!
+        </div>
+        
+        <script>/* Using multiple unit types within one animation. */
+ 
+            $("#go").click( function() {
+                $("#block").animate({//animate메소드로 첫번째 인자값 이름이 없는 오브젝트 전달
+                    width: "300px", //폭
+                    opacity: 0.4, //불투명도
+                    marginLeft: "50px",
+                    fontSize: "30px",
+                    borderWidth: "10px"
+                }, 3000);//두번째 인자로 숫자 3초안에끝난다는거
+            });
+        
+        </script>
+    </body>
+</html>

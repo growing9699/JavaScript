@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+    </head>
+    <body>
+        <div id="result"></div>
+        <input type="text" id="msg" />
+        <input type="button" value="get result" id="getResult" />
+        <script>
+            $('#getResult').click( function() {
+                $('#result').html('');//공백으로 해준다
+                $.ajax({//인안은 객체인데 객체 안에 키와 값을 여러개넣어줌.그렇게객체의 속성을 만듬
+                    url:'http://opentutorials.org/example/jquery/example.jquery.ajax.php',//서버가 위치하는 url을 적어줌
+                    dataType:'json',//서버가 리턴해주는 타입
+                    type:'POST',
+                    data:{'msg':$('#msg').val()},//msg는키 valu는 값
+                    success:function(result){//통신하고 결과가 성공이면//result는 서버가 리턴해준것 
+                        if(result['result']==true){
+                          $('#result').html(result['msg']);
+                        }
+                    }
+                });
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>p {
+                color:blue;
+                margin:8px;
+            }
+        </style>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+    </head>
+    <body>
+        <input type="text" value="some text"/>
+        <p>
+        </p>
+        <script>
+        $("input").keyup( function () {//.keyup이벤트를 설치만해둔것인듯
+                var value = $(this).val();
+                $("p").text(value);
+            }).keyup();//.keyup();은 트리거임 .keyup을 호출
+        </script>
+    </body>
+</html>

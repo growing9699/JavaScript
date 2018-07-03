@@ -1,0 +1,27 @@
+<html>
+    <head>
+   <script type="text/javascript" 
+   src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+   <script type="text/javascript">
+       function clickHandler(e){
+           alert('thank you');
+       }
+       $(document).bind('ready', function(){//bind는 이벤트를 설치하는것
+    	   //ready라는 이벤트를 설치해서 //웹페이지가 다운로드가 끝난상황을 체크하고 바디안에있는 잇풋들이 안착이되면
+    	   //input버튼에 이벤트를 설치하는것//
+            $('#click_me').bind('click', clickHandler);
+            $('#remove_event').bind('click', function(e){//이거는 익명함수 이름이 없는 함수//재활용안할거면 이렇게쓰고 할거면 위(clickHandler)로직처럼해라
+                $('#click_me').unbind('click', clickHandler);//이렇게 다써줘야 삭제됨
+            });
+            $('#trigger_event').bind('click', function(e){
+                $('#click_me').trigger('click');
+            });
+        })
+   </script>
+</head>
+<body>
+        <input id="click_me" type="button" value="click me" />
+        <input id="remove_event" type="button" value="unbind" />
+        <input id="trigger_event" type="button" value="trigger" />
+    </body>
+</html>

@@ -1,0 +1,23 @@
+<html>
+    <body>
+        <ul>
+            <li>test2</li>
+        </ul>
+        <ul class="foo">
+            <li>test</li>
+        </ul>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        <script type="text/javascript">
+            (function($){            
+                $('ul.foo').click( function() {//ul.foo은 ul엘리먼트중 foo클래스를 선택
+   $('li', this).css('background-color','red');//('li', this)는
+   //이벤트를 발생시킨 엘리먼트 ul.foo 가 this임  
+ /*   <ul class="foo">
+   <li>test</li>
+   </ul>
+   이 안에서 li만 선택한다는뜻 */
+                });
+            })(jQuery)
+        </script>
+    </body>
+</html>
