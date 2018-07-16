@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<style>
+	a:link{ /* 방문하지않은곳  방문한 적이 없는 링크 */
+		color:black;
+	}
+	a:visited{ 
+	color:red;
+	}
+	/* 방문한곳  방문한 적이 있는 링크 visited의 경우는 보안상의 이유로 아래와 같은 속성만 변경이 가능합니다. color
+background-color
+border-color
+outline-color
+The color parts of the fill and stroke properties*/
+	a:hover{ /* 마우스를 위로올렸을때 */
+	color:yellow;
+	}
+	a:active{ /* 클릭한상태일때 */
+	 color:green;
+	}
+	a:focus{ /* 탭으로 포커싱됬을때 */
+	color:white;
+	}
+	input:focus{ /* 탭으로 포커싱됬을때 */
+	 background-color:black;
+	 color:white;
+	}
+	
+	</style>
+  </head>
+  <body>
+ 	<a href = "https://naver.com">방문함</a>
+ 	<a href = "https://daum.net">방문안함</a>
+ 	
+ 	<input type="text"/>
+  </body>
+</html>

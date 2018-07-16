@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      ul li{ /*  ul 밑에 있는 모든 태그를 선택합니다.   */
+        color:red;
+      }
+      #lecture>li{ /* 직계자식만  바로 밑에 있는 li만을 선택합니다. */
+        border:1px solid red;
+      }
+      ul,ol{  /* 아래 코드는 ul과 ol을 동시에 선택합니다. */
+        background-color: powderblue;
+      }
+    </style>
+  </head>
+  <body>
+    <ul>
+      <li>HTML</li>
+      <li>CSS</li>
+      <li>JavaScript</li>
+    </ul>
+    <ol id="lecture">
+      <li>HTML</li>
+      <li>CSS
+        <ol>
+          <li>selector</li>
+          <li>declaration</li>
+        </ol>
+      </li>
+      <li>JavaScript</li>
+    </ol>
+  </body>
+</html>
