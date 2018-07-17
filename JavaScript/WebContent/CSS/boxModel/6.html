@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+        #parent, #other, #grand{
+            border:5px solid tomato;
+        }
+        #grand{
+            position: relative;
+            /* 하지만 부모가 이렇게 static이 아닌 위치를 지정하게되면 자식인 me는 html이 아닌
+            이것을 기준으로 위치를 지정함 */
+        }
+        #me{
+            background-color: black;
+            color:white;
+            position: absolute;
+             /*       html엘리먼트를 기준으로 하는것이 absolute 
+      relative는 부모엘리먼트를 기준으로 하는것*/
+            left:0;
+            top:0;
+            width:100px;
+			/* 부모로부터벗어나면 크기를 직접 지정해줘야함 */           
+        }
+    </style>
+  </head>
+  <body>
+    <div id="other">other</div>
+    <div id="grand">
+       grand
+        <div id="parent">
+           parent
+           <div id="me">me</div>
+        </div>
+    </div>
+     
+  </body>
+</html>

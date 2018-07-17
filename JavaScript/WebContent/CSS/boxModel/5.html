@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+        html{border:1px solid gray;}
+        div{
+            border:5px solid tomato;
+            margin:10px;
+        }
+        #me{
+            position: relative;
+            /* static은 정적인거라 div안에서 안움직임 하지만 relative는 상대적인거라 움직임
+            결론적으로 offset을 사용할수있음 left right top bottom과 같은것들 */
+            left:100px;
+            top:100px;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="other">other</div>
+    <div id="parent">
+       parent
+       <div id="me">me</div>
+    </div>
+  </body>
+</html>
