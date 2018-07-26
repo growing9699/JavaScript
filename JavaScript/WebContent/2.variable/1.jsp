@@ -19,6 +19,7 @@ first = 'ÄÚµù';
 alert(first+'everybody');
 var a = 'coding', b = 'everybody2';
 alert(a+b);
+//1
 
 </script>
 </body>
