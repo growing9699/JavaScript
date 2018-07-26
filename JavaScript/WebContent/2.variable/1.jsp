@@ -21,7 +21,7 @@ var a = 'coding', b = 'everybody2';
 alert(a+b);
 //1
 //2
-
+//3
 </script>
 </body>
 </html>
